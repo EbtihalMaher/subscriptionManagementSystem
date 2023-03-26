@@ -39,6 +39,8 @@ class EnterpriseSeeder extends Seeder
             'enterprise_id' => $enterprise->id,
         ]);
 
+
+
         $role = Role::query()->create(
             [
                 'name'          => 'Enterprise Admin',

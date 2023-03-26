@@ -40,7 +40,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        $roles = Role::query()->filterByLevel()->get();
+        $roles = Role::filterByLevel()->get();
         return response()->view('cms.admins.create', ['roles' => $roles]);
     }
 
