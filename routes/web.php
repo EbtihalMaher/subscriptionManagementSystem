@@ -8,6 +8,7 @@ use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PackageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,7 @@ Route::prefix('/cms/admin')->middleware(['auth:admin'/*, 'verified'*/])->group(f
     Route::resource('admins', AdminController::class);
     Route::resource('users', UserController::class);
     Route::resource('enterprises', EnterpriseController::class);
+    Route::resource('packages', PackageController::class);
 
     Route::get('roles/{role}/permissions', [RoleController::class, 'editRolePermissions'])->name('role.edit-permissions');
     Route::put('roles/{role}/permissions', [RoleController::class, 'updateRolePermissions']);
