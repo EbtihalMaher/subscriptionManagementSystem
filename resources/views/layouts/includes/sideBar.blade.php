@@ -141,6 +141,69 @@
             </ul>
         </li>
 
+        {{-- <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Promo Codes</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('promo_codes.index')}}" class="menu-link">
+                    Index
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route("promo_codes.create")}}" class="menu-link">
+                    Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Activation Codes</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('activation_codes.index')}}" class="menu-link">
+                    Index
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route("activation_codes.create")}}" class="menu-link">
+                    Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Activation Codes Groups</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('activation_codes_groups.index')}}" class="menu-link">
+                    Index
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route("activation_codes_groups.create")}}" class="menu-link">
+                    Create
+                    </a>
+                </li>
+            </ul>
+        </li> --}}
+
         @can('Read-Users')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">

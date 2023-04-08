@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card-header">
-        <h3 class="card-title">Create User</h3>
+        <h3 class="card-title">Create Promo Code</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
@@ -11,50 +11,18 @@
         <div class="card-body">
             @csrf
             <div class="form-group">
-                <label for="name">name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter Full name">
+                <label for="name">Promo Code Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter the name">
             </div>
             <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" class="form-control" id="description" placeholder="Enter description">
+                <label for="package_id">Package Id</label>
+                <input type="text" class="form-control" id="package_id" placeholder="Enter the packageId">
             </div>
             <div class="form-group">
-                <label for="price">Price</label>
-                <input type="number" class="form-control" id="price" placeholder="Enter price">
+                <label for="discount_percent">Discount</label>
+                <input type="number" class="form-control" id="discount_percent" placeholder="Enter the discount percent">
             </div>
-            <div class="form-group">
-                <label for="duration">Duration</label>
-                <input type="number" class="form-control" id="duration" placeholder="Enter duration">
-            </div>
-            <div class="form-group">
-                <label for="duration_unit">Duration unit</label>
-                <select class="form-control" id="duration_unit">
-                    <option value="d">Day</option>
-                    <option value="m">Month</option>
-                    <option value="y">Year</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="image" >image</label>
-                <input class="form-control" type="file"  id="image" />
-            </div>
-            <div class="form-group">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="is_unlimited" name="is_unlimited">
-                    <label class="custom-control-label" for="is_unlimited">isUnlimited</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="limit">Limit</label>
-                <input type="number" class="form-control" id="limit" placeholder="Enter Limit">
-            </div>
-            <div class="form-group">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="active" name="active">
-                    <label class="custom-control-label" for="active">Active</label>
-                </div>
-            </div>
-
+            
         </div>
         <!-- /.card-body -->
 
@@ -69,16 +37,10 @@
 <script>
     function performSave() {
         // Make a request for a user with a given ID
-        axios.post('/cms/admin/packages',{
+        axios.post('/cms/admin/promo_codes',{
             name: document.getElementById('name').value,
-            description: document.getElementById('description').value,
-            price: document.getElementById('price').value,
-            duration: document.getElementById('duration').value,
-            duration_unit: document.getElementById('duration_unit').value,
-            image: document.getElementById('image').value,
-            is_unlimited: document.getElementById('is_unlimited').value,
-            limit: document.getElementById('limit').value,
-            active: document.getElementById('active').value,
+            package_id: document.getElementById('package_id').value,
+            discount_percent: document.getElementById('discount_percent').value,
         })
         .then(function (response) {
             // handle success

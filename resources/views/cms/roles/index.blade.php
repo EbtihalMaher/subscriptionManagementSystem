@@ -74,7 +74,7 @@
         })
     }
     function performDelete(id) {
-        axios.delete('/cms/admin/roles/'+id)
+        axios.delete('/cms/{session("guard")}/roles/'+id)
         .then(function (response) {
             // handle success
             console.log(response);

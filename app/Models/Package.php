@@ -34,4 +34,12 @@ class Package extends Model
     {
         return new Attribute(get: fn () => $this->name);
     }
+
+    public function enterprise () {
+        return $this->belongsTo(Enterprise::class);
+    }
+
+    public function scopeByEnterprise ($query) {
+        return $query->where('enterprise_id', auth()->user()->enterprise_id);
+    }
 }
