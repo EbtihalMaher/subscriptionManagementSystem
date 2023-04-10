@@ -39,7 +39,7 @@
             // handle success
             console.log(response);
             toastr.success(response.data.message);
-            window.location.href = '/cms/admin/roles';
+            window.location.href = '/cms/{{session('guard')}}/roles';
         })
         .catch(function (error) {
             // handle error 4xx - 5xx

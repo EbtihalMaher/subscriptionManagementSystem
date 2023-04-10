@@ -55,7 +55,7 @@
 
 <script>
     function performUpdate(permissionId) {
-        axios.put('/cms/admin/roles/{{$role->id}}/permissions',{
+        axios.put('/cms/{{session('guard')}}/roles/{{$role->id}}/permissions',{
             permission_id: permissionId,
         })
         .then(function (response) {

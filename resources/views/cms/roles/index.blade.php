@@ -74,14 +74,14 @@
         })
     }
     function performDelete(id) {
-        axios.delete('/cms/{session("guard")}/roles/'+id)
+        axios.delete('/cms/{{session('guard')}}/roles/'+id)
         .then(function (response) {
             // handle success
             console.log(response);
             // toastr.success(response.data.message);
             showSwalMessage(response.data);
             document.getElementById('role_'+id+'_row').remove();
-            window.location.href ='/cms/admin/roles';
+            window.location.href ='/cms/{{session('guard')}}/roles';
         })
         .catch(function (error) {
             // handle error 4xx - 5xx

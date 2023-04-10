@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\EnterpriseController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -27,9 +28,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/index', function () {
-    return view('index');
-});
+//Route::get('/index', function () {
+//    return view('index');
+//});
 
 
 // Auth::routes();
@@ -45,42 +46,25 @@ Route::prefix('cms')->middleware('guest:admin')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 });
 
-// Route::prefix('cms/{guard}')->middleware(['auth:admin,user'/*, 'verified'*/])->group(function () {
-//     Route::view('/', 'index')->name('cms.dashboard');
-//     Route::get('edit-password', [AuthController::class, 'editPassword'])->name('cms.edit-password');
-//     Route::resource('roles', RoleController::class);
-//     Route::resource('permissions', PermissionController::class);
-//     Route::put('edit-password', [AuthController::class, 'updatePassword']);
-//     Route::get('logout', [AuthController::class, 'logout'])->name('cms.logout');
-// });
-
-Route::view('/cms', 'index')->name('cms.dashboard');
+ Route::prefix('cms')->middleware(['auth:admin,user'/*, 'verified'*/])->group(function () {
+     Route::get('home', [HomeController::class, 'index'])->name('cms.dashboard');
+     Route::get('edit-password', [AuthController::class, 'editPassword'])->name('cms.edit-password');
+     Route::resource('roles', RoleController::class);
+     Route::resource('permissions', PermissionController::class);
+     Route::put('edit-password', [AuthController::class, 'updatePassword']);
+     Route::get('logout', [AuthController::class, 'logout'])->name('cms.logout');
+ });
 
 Route::prefix('/cms/admin')->middleware(['auth:admin'/*, 'verified'*/])->group(function () {
-    Route::view('/', 'index')->name('cms.dashboard');
-    Route::get('edit-password', [AuthController::class, 'editPassword'])->name('cms.edit-password');
-    Route::resource('roles', RoleController::class);
-    Route::resource('permissions', PermissionController::class);
-    Route::put('edit-password', [AuthController::class, 'updatePassword']);
-    Route::get('logout', [AuthController::class, 'logout'])->name('cms.logout');
-
     Route::resource('admins', AdminController::class);
     Route::resource('users', UserController::class);
     Route::resource('enterprises', EnterpriseController::class);
-    
 
     Route::get('roles/{role}/permissions', [RoleController::class, 'editRolePermissions'])->name('role.edit-permissions');
     Route::put('roles/{role}/permissions', [RoleController::class, 'updateRolePermissions']);
 });
 
 Route::prefix('/cms/user')->middleware(['auth:user'/*, 'verified'*/])->group(function () {
-    Route::view('/', 'index')->name('cms.dashboard');
-    Route::get('edit-password', [AuthController::class, 'editPassword'])->name('cms.edit-password');
-    Route::resource('roles', RoleController::class);
-    Route::resource('permissions', PermissionController::class);
-    Route::put('edit-password', [AuthController::class, 'updatePassword']);
-    Route::get('logout', [AuthController::class, 'logout'])->name('cms.logout');
-
     Route::resource('users', UserController::class);
     Route::resource('packages', PackageController::class);
 
