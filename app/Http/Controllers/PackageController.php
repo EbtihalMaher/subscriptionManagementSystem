@@ -27,7 +27,12 @@ class PackageController extends Controller
     public function create()
     {
         $packages = Package::all();
+        $packages = Package::where('active','=',true)->get();
+        $packages = Package::where('is_unlimited','=',true)->get();
+
         return response()->view('cms.packages.create', ['packages' => $packages]);
+
+        
     }
 
     /**
@@ -39,19 +44,38 @@ class PackageController extends Controller
     public function store(Request $request)
     {
         $validator = Validator($request->all(), [
-            'package_id' => 'required|numeric|exists:packages,id',
+            // 'package_id' => 'required|numeric|exists:packages,id',
             'name' => 'required|string',
+            'description' => 'string',
             'price' => 'required|numeric',
             'duration' => 'required|numeric',
+            'duration_unit' => 'required|string|in:d,m,y',
+            'image' => 'required|string',
+            'limit' => 'numeric',
+            'is_unlimited' => 'required|boolean',
+            'active' => 'required|boolean',
 
         ]);
 
         if (!$validator->fails()) {
             $package = new Package();
+            if($request->hasFile('image'))
+            {
+                $file = $request->file('image');
+                $extention = $file->getClientOriginalExtension();  // $ext
+                $filename= time().'.'.$extention;
+                $file->move('assets/uploads/packages/',$filename);
+                $package->image = $filename; // to store in DB
+            }
             $package->name = $request->input('name');
-            $package->package_id = $request->input('package_id');
+            $package->description = $request->input('description');
+            // $package->package_id = $request->input('package_id');
             $package->price = $request->input('price');
             $package->duration = $request->input('duration');
+            $package->duration_unit = $request->input('duration_unit');
+            $package->limit = $request->input('limit');
+            $package->is_unlimited = $request->input('is_unlimited');
+            $package->active = $request->input('active') ;
             $isSaved = $package->save();
             return response()->json(
                 ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
