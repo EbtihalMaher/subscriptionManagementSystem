@@ -128,13 +128,13 @@
 
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{route('Package.index')}}" class="menu-link">
+                    <a href="{{route('packages.index')}}" class="menu-link">
                     Index
                     </a>
                 </li>
 
                 <li class="menu-item">
-                    <a href="{{route("Package.create")}}" class="menu-link">
+                    <a href="{{route("packages.create")}}" class="menu-link">
                     Create
                     </a>
                 </li>
