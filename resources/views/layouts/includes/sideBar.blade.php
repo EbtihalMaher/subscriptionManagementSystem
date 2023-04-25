@@ -100,6 +100,47 @@
         </li>
         @endcan
 
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Enterprises</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('enterprises.index')}}" class="menu-link">
+                    Index
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route("enterprises.create")}}" class="menu-link">
+                    Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Packages</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('Package.index')}}" class="menu-link">
+                    Index
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route("Package.create")}}" class="menu-link">
+                    Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+
         @can('Read-Users')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">

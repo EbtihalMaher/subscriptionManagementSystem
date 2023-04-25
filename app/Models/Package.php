@@ -18,6 +18,15 @@ class Package extends Model
      */
     protected $fillable = [
         'name',
+        'description',
+        'price',
+        'duration',
+        'duration_unit',
+        'image',
+        'is_unlimited',
+        'limit',
+        'active'
+
         
     ];
 
