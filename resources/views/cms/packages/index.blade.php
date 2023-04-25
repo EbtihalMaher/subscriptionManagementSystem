@@ -44,11 +44,11 @@
         </table>
     </div>
     <!-- /.card-body -->
-    <div class="card-footer clearfix">
+    {{-- <div class="card-footer clearfix">
         <ul class="pagination pagination-sm m-0 float-right">
             {{ $packages->links() }}
         </ul>
-    </div>
+    </div> --}}
 @endsection
 
 <script>

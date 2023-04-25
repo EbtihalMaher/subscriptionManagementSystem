@@ -16,6 +16,7 @@ class Package extends Model
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'description',
@@ -27,11 +28,32 @@ class Package extends Model
         'limit',
         'active'
 
-        
+
     ];
+
+
+//    public function is_unlimited(){
+//        return new Attribute(get:fn () =>$this->is_unlimited ? 'is_unlimited': 'limited');
+//
+//    }
+
+
+
+
+    public function active(){
+        return new Attribute(get:fn () =>$this->active ? 'active': 'in_active');
+    }
 
     public function userName(): Attribute
     {
         return new Attribute(get: fn () => $this->name);
+    }
+
+    public function enterprise () {
+        return $this->belongsTo(Enterprise::class);
+    }
+
+    public function scopeByEnterprise ($query) {
+        return $query->where('enterprise_id', auth()->user()->enterprise_id);
     }
 }

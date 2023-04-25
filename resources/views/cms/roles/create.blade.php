@@ -26,7 +26,7 @@
 <script>
     function performSave() {
         // Make a request for a user with a given ID
-        axios.post('/cms/admin/roles',{
+        axios.post('/cms/{{session('guard')}}/roles',{
             guard_name: document.getElementById('guard_name').value,
             name: document.getElementById('name').value,
         })

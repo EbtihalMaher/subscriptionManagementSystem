@@ -112,7 +112,7 @@
                 </div>
               </form>
 
-              
+
               <p class="text-center">
                 <a href="register.html" class="text-center">Register a new membership</a>
               </p>
@@ -164,7 +164,7 @@
         .then(function(response) {
           console.log(response);
           toastr.success(response.data.message);
-          window.location.href = '/cms/admin';
+          window.location.href = '/cms/home';
         })
         .catch(function(error) {
           console.log(error.response);
