@@ -4,11 +4,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\HomeController;
->>>>>>> 64b30172038479a174a4c47a451799c107733a81
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
