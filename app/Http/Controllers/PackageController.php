@@ -26,13 +26,13 @@ class PackageController extends Controller
      */
     public function create()
     {
-        $packages = Package::query()->scopeByEnterprise()->get();
+        $packages = Package::byEnterprise()->get();
         $packages = Package::where('active','=',true)->get();
         $packages = Package::where('is_unlimited','=',true)->get();
 
         return response()->view('cms.packages.create', ['packages' => $packages]);
 
-        
+
     }
 
     /**

@@ -13,7 +13,7 @@
             <div class="form-group mt-3">
                 <label for="name">name</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter Full name">
-            </div> 
+            </div>
             <div class="form-group mt-3">
                 <label for="description">Description</label>
                 <input type="text" class="form-control" id="description" placeholder="Enter description">
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group mt-3">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="is_unlimited" name="is_unlimited"  >
+                    <input type="checkbox" class="custom-control-input" id="is_unlimited" name="is_unlimited" >
                     <label class="custom-control-label" for="is_unlimited">isUnlimited</label>
                 </div>
             </div>
@@ -76,7 +76,7 @@
             duration: document.getElementById('duration').value,
             duration_unit: document.getElementById('duration_unit').value,
             image: document.getElementById('image').value,
-            is_unlimited: document.getElementById('is_unlimited').value,
+            is_unlimited: document.getElementById('is_unlimited').checked,
             limit: document.getElementById('limit').value,
             active: document.getElementById('active').value,
         })
