@@ -16,7 +16,7 @@ class Package extends Model
      *
      * @var array<int, string>
      */
-    
+
     protected $fillable = [
         'name',
         'description',
@@ -28,14 +28,14 @@ class Package extends Model
         'limit',
         'active'
 
-        
+
     ];
 
 
-    public function is_unlimited(){
-        return new Attribute(get:fn () =>$this->is_unlimited ? 'is_unlimited': 'limited');
-
-    }
+//    public function is_unlimited(){
+//        return new Attribute(get:fn () =>$this->is_unlimited ? 'is_unlimited': 'limited');
+//
+//    }
 
 
 
