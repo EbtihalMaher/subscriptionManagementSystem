@@ -68,11 +68,11 @@
 
 <script>
 
-       
+
     const isUnlimitedCheckbox = document.getElementById('is_unlimited');
     const limitInput = document.getElementById('limit');
 
-    
+
     isUnlimitedCheckbox.addEventListener('change', function() {
     limitInput.style.display = this.checked ? 'none' : 'block';
     });
@@ -85,10 +85,8 @@
         formData.append('duration', document.getElementById('duration').value);
         formData.append('duration_unit', document.getElementById('duration_unit').value);
         formData.append('image', document.getElementById('image').files[0]);
-        formData.append('is_unlimited', isUnlimitedCheckbox.checked);
+        formData.append('is_unlimited', (isUnlimitedCheckbox.checked ? 1 : 0));
         formData.append('limit', limitInput.value);
-        formData.append('is_unlimited', document.getElementById('is_unlimited').checked);
-        formData.append('limit', document.getElementById('limit').value);
         formData.append('active', document.getElementById('active').checked);
 
         axios.post('/cms/user/packages', formData, {
@@ -97,7 +95,7 @@
             }
         })
 
-      
+
     // function performSave() {
     //     let formData = new FormData();
     //     // Make a request for a user with a given ID
