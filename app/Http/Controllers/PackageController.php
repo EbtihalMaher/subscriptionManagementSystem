@@ -15,7 +15,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::all();
+        $packages = Package::with('enterprise')->get();
         return response()->view('cms.packages.index', ['packages' => $packages]);
     }
 
@@ -26,13 +26,13 @@ class PackageController extends Controller
      */
     public function create()
     {
-        $packages = Package::all();
+        $packages = Package::byEnterprise()->get();
         $packages = Package::where('active','=',true)->get();
         $packages = Package::where('is_unlimited','=',true)->get();
 
         return response()->view('cms.packages.create', ['packages' => $packages]);
 
-        
+
     }
 
     /**
@@ -50,7 +50,7 @@ class PackageController extends Controller
             'price' => 'required|numeric',
             'duration' => 'required|numeric',
             'duration_unit' => 'required|string|in:d,m,y',
-            'image' => 'required|string',
+            'image' => 'required|image',
             'limit' => 'numeric',
             'is_unlimited' => 'required|boolean',
             'active' => 'required|boolean',
@@ -61,11 +61,10 @@ class PackageController extends Controller
             $package = new Package();
             if($request->hasFile('image'))
             {
-                $file = $request->file('image');
-                $extention = $file->getClientOriginalExtension();  // $ext
-                $filename= time().'.'.$extention;
-                $file->move('assets/uploads/packages/',$filename);
-                $package->image = $filename; // to store in DB
+                $image = $request->file('image');
+                $imageName = time() . '.' . $image->extension();
+                $image->storeAs('packages', $imageName, ['disk' => 'public']);
+                $package->image = 'packages/' . $imageName;
             }
             $package->name = $request->input('name');
             $package->description = $request->input('description');

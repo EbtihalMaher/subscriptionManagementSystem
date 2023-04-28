@@ -30,7 +30,10 @@
                         <td>{{$package->price}}</td>
                         <td>{{$package->duration}}</td>
                         <td>{{$package->duration_unit ?? 'non'}}</td>
-                        <td><img src="{{asset('assets/uploads/packages/' .$package->image)}}" class="image"   alt="Image here "></td>
+                        
+                        {{-- <td><img src="{{asset('assets/uploads/packages/' .$package->image)}}" class="image"   alt="Image here "></td> --}}
+                        <td><img src="{{Storage::url($package->image)}}" class="image"   alt="Image here "></td>
+
                         <td>{{$package->limit}}</td>
                         <td>
                             <span class="badge @if($package->is_unlimited) bg-success @else bg-danger @endif">{{$package->is_unlimited}}</span>

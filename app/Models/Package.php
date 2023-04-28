@@ -32,16 +32,14 @@ class Package extends Model
     ];
 
 
-//    public function is_unlimited(){
-//        return new Attribute(get:fn () =>$this->is_unlimited ? 'is_unlimited': 'limited');
-//
-//    }
 
+    public function is_unlimited(){
+        return new Attribute(get:fn () =>$this->is_unlimited ? 'is_unlimited': 'limited');
 
-
-
+    }
     public function active(){
         return new Attribute(get:fn () =>$this->active ? 'active': 'in_active');
+
     }
 
     public function userName(): Attribute

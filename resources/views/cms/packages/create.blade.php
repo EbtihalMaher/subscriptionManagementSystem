@@ -7,7 +7,7 @@
     <!-- /.card-header -->
     <!-- form start -->
 
-    <form id="page-form">
+    <form id="page-form" enctype="multipart/form-data">
         <div class="card-body ">
             @csrf
             <div class="form-group mt-3">
@@ -44,7 +44,7 @@
                     <label class="custom-control-label" for="is_unlimited">isUnlimited</label>
                 </div>
             </div>
-            <div class="form-group mt-3">
+            <div class="form-group mt-3" >
                 <label for="limit">Limit</label>
                 <input type="number" class="form-control" id="limit" placeholder="Enter Limit">
             </div>
@@ -67,19 +67,54 @@
 @section('scripts')
 
 <script>
-    function performSave() {
-        // Make a request for a user with a given ID
-        axios.post('/cms/user/packages',{
-            name: document.getElementById('name').value,
-            description: document.getElementById('description').value,
-            price: document.getElementById('price').value,
-            duration: document.getElementById('duration').value,
-            duration_unit: document.getElementById('duration_unit').value,
-            image: document.getElementById('image').value,
-            is_unlimited: document.getElementById('is_unlimited').checked,
-            limit: document.getElementById('limit').value,
-            active: document.getElementById('active').value,
+        // Get references to the is_unlimited checkbox and the limit input
+    const isUnlimitedCheckbox = document.getElementById('is_unlimited');
+    const limitInput = document.getElementById('limit');
+
+    // Add an event listener to the is_unlimited checkbox
+    isUnlimitedCheckbox.addEventListener('change', function() {
+        // Toggle the limit input's visibility based on the checkbox's checked state
+        limitInput.style.display = this.checked ? 'none' : 'block';
+    });
+
+        function performSave() {
+        let formData = new FormData();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('description', document.getElementById('description').value);
+        formData.append('price', document.getElementById('price').value);
+        formData.append('duration', document.getElementById('duration').value);
+        formData.append('duration_unit', document.getElementById('duration_unit').value);
+        formData.append('image', document.getElementById('image').files[0]);
+        formData.append('is_unlimited', isUnlimitedCheckbox.checked);
+        formData.append('limit', limitInput.value);
+        // formData.append('is_unlimited', document.getElementById('is_unlimited').checked);
+        // formData.append('limit', document.getElementById('limit').value);
+        formData.append('active', document.getElementById('active').checked);
+
+        
+
+        axios.post('/cms/user/packages', formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
         })
+
+      
+    // function performSave() {
+    //     let formData = new FormData();
+    //     // Make a request for a user with a given ID
+    //     axios.post('/cms/user/packages',{
+    //         name: document.getElementById('name').value,
+    //         description: document.getElementById('description').value,
+    //         price: document.getElementById('price').value,
+    //         duration: document.getElementById('duration').value,
+    //         duration_unit: document.getElementById('duration_unit').value,
+    //         image: document.getElementById('image').files[0],
+    //         is_unlimited: document.getElementById('is_unlimited').checked,
+    //         limit: document.getElementById('limit').value,
+    //         active: document.getElementById('active').checked,
+
+    //     })
         .then(function (response) {
             // handle success
             console.log(response);
@@ -96,4 +131,6 @@
         });
     }
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 @endsection
