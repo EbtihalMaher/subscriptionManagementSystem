@@ -52,7 +52,7 @@ class PackageController extends Controller
             'duration_unit' => 'required|string|in:d,m,y',
             'image' => 'required|image',
             'is_unlimited' => 'required|boolean',
-            'limit' => 'required_if:is_unlimited,false|integer',
+            'limit' => 'nullable|required_if:is_unlimited,false|integer',
             'active' => 'required|boolean',
 
         ]);
