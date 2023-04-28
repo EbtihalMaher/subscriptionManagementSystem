@@ -91,8 +91,6 @@
         formData.append('limit', document.getElementById('limit').value);
         formData.append('active', document.getElementById('active').checked);
 
-        
-
         axios.post('/cms/user/packages', formData, {
             headers: {
             'Content-Type': 'multipart/form-data'
