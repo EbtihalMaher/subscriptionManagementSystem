@@ -67,14 +67,14 @@
 @section('scripts')
 
 <script>
-        // Get references to the is_unlimited checkbox and the limit input
+
+       
     const isUnlimitedCheckbox = document.getElementById('is_unlimited');
     const limitInput = document.getElementById('limit');
 
-    // Add an event listener to the is_unlimited checkbox
+    
     isUnlimitedCheckbox.addEventListener('change', function() {
-        // Toggle the limit input's visibility based on the checkbox's checked state
-        limitInput.style.display = this.checked ? 'none' : 'block';
+    limitInput.style.display = this.checked ? 'none' : 'block';
     });
 
         function performSave() {
@@ -87,8 +87,8 @@
         formData.append('image', document.getElementById('image').files[0]);
         formData.append('is_unlimited', isUnlimitedCheckbox.checked);
         formData.append('limit', limitInput.value);
-        // formData.append('is_unlimited', document.getElementById('is_unlimited').checked);
-        // formData.append('limit', document.getElementById('limit').value);
+        formData.append('is_unlimited', document.getElementById('is_unlimited').checked);
+        formData.append('limit', document.getElementById('limit').value);
         formData.append('active', document.getElementById('active').checked);
 
         
