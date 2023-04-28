@@ -87,11 +87,11 @@
         formData.append('image', document.getElementById('image').files[0]);
         formData.append('is_unlimited', isUnlimitedCheckbox.checked);
         formData.append('limit', limitInput.value);
-        // formData.append('is_unlimited', document.getElementById('is_unlimited').checked);
-        // formData.append('limit', document.getElementById('limit').value);
+        formData.append('is_unlimited', document.getElementById('is_unlimited').checked);
+        formData.append('limit', document.getElementById('limit').value);
         formData.append('active', document.getElementById('active').checked);
 
-        
+
 
         axios.post('/cms/user/packages', formData, {
             headers: {
@@ -99,7 +99,7 @@
             }
         })
 
-      
+
     // function performSave() {
     //     let formData = new FormData();
     //     // Make a request for a user with a given ID
