@@ -44,7 +44,7 @@
                     <label class="custom-control-label" for="is_unlimited">isUnlimited</label>
                 </div>
             </div>
-            <div class="form-group mt-3" >
+            <div class="form-group mt-3" id="limit">
                 <label for="limit">Limit</label>
                 <input type="number" class="form-control" id="limit" placeholder="Enter Limit">
             </div>
