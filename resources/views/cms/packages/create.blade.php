@@ -44,7 +44,7 @@
                     <label class="custom-control-label" for="is_unlimited">isUnlimited</label>
                 </div>
             </div>
-            <div class="form-group mt-3" id="limit">
+            <div class="form-group mt-3" id="limit-div">
                 <label for="limit">Limit</label>
                 <input type="number" class="form-control" id="limit" placeholder="Enter Limit">
             </div>
@@ -74,7 +74,7 @@
 
 
     isUnlimitedCheckbox.addEventListener('change', function() {
-    limitInput.style.display = this.checked ? 'none' : 'block';
+    document.getElementById('limit-div').style.display = this.checked ? 'none' : 'block';
     });
 
         function performSave() {
@@ -87,7 +87,7 @@
         formData.append('image', document.getElementById('image').files[0]);
         formData.append('is_unlimited', (isUnlimitedCheckbox.checked ? 1 : 0));
         formData.append('limit', limitInput.value);
-        formData.append('active', document.getElementById('active').checked);
+        formData.append('active', (document.getElementById('active').checked ? 1: 0));
 
         axios.post('/cms/user/packages', formData, {
             headers: {
