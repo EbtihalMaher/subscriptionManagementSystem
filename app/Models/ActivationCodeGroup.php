@@ -24,4 +24,9 @@ class ActivationCodeGroup extends Model
         'price',
     ];
 
+    public function package () {
+        return $this->belongsTo(Package::class);
+    }
+
+
 }

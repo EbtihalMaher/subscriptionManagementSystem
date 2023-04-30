@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivationCodeGroup;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActivationCodeGroupController extends Controller
 {
@@ -14,7 +15,8 @@ class ActivationCodeGroupController extends Controller
      */
     public function index()
     {
-        //
+        $activationCodeGroups = ActivationCodeGroup::with('package')->get();
+        return response()->view('cms.activation_codes_groups.index');
     }
 
     /**
@@ -24,7 +26,9 @@ class ActivationCodeGroupController extends Controller
      */
     public function create()
     {
-        //
+
+
+        return response()->view('cms.activation_codes_groups.create');
     }
 
     /**
@@ -35,8 +39,38 @@ class ActivationCodeGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator($request->all(), [
+            'package_id' => 'required|numeric|exists:packages,id',
+            'group_name' => 'required|string',
+            'count' => 'required|numeric',
+            'start_date' => 'date',
+            'start_date' => 'date',
+            'price' => 'required|numeric',
+
+
+        ]);
+
+        if (!$validator->fails()) {
+            $activationCodeGroup = new ActivationCodeGroup();
+            $activationCodeGroup->package_id = $request->input('package_id');
+            $activationCodeGroup->group_name = $request->input('group_name');
+            $activationCodeGroup->count = $request->input('count');
+            $activationCodeGroup->start_date = $request->input('start_date');
+            $activationCodeGroup->expire_date = $request->input('expire_date');
+            $activationCodeGroup->price = $request->input('price');
+            $isSaved = $activationCodeGroup->save();
+            return response()->json(
+                ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
+                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST
+            );
+        } else {
+            return response()->json(
+                ['message' => $validator->getMessageBag()->first()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
+ 
 
     /**
      * Display the specified resource.
@@ -83,3 +117,4 @@ class ActivationCodeGroupController extends Controller
         //
     }
 }
+
