@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivationCodeGroup;
+use App\Models\Package;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use DateTime;
 
 class ActivationCodeGroupController extends Controller
 {
@@ -16,7 +18,7 @@ class ActivationCodeGroupController extends Controller
     public function index()
     {
         $activationCodeGroups = ActivationCodeGroup::with('package')->get();
-        return response()->view('cms.activation_codes_groups.index');
+        return response()->view('cms.activation_codes_groups.index', ['activationCodeGroups' => $activationCodeGroups]);
     }
 
     /**
@@ -27,8 +29,8 @@ class ActivationCodeGroupController extends Controller
     public function create()
     {
 
-
-        return response()->view('cms.activation_codes_groups.create');
+        $packages = Package::get();
+        return response()->view('cms.activation_codes_groups.create', ['packages' => $packages]);
     }
 
     /**
@@ -39,12 +41,14 @@ class ActivationCodeGroupController extends Controller
      */
     public function store(Request $request)
     {
+        
+
         $validator = Validator($request->all(), [
             'package_id' => 'required|numeric|exists:packages,id',
             'group_name' => 'required|string',
             'count' => 'required|numeric',
-            'start_date' => 'date',
-            'start_date' => 'date',
+            'start_date' => 'date_format:d-M-Y',
+            'start_date' => 'date_format:d-M-Y',
             'price' => 'required|numeric',
 
 
@@ -55,8 +59,27 @@ class ActivationCodeGroupController extends Controller
             $activationCodeGroup->package_id = $request->input('package_id');
             $activationCodeGroup->group_name = $request->input('group_name');
             $activationCodeGroup->count = $request->input('count');
-            $activationCodeGroup->start_date = $request->input('start_date');
-            $activationCodeGroup->expire_date = $request->input('expire_date');
+
+            $start_date_str = $request->input('start_date');
+            $start_date = DateTime::createFromFormat('d-M-Y', $start_date_str);
+
+            if ($start_date !== false) {
+                $start_date_mysql = $start_date->format('Y-m-d H:i:s');
+                $activationCodeGroup->start_date = $start_date_mysql;
+            } else {
+                // Handle invalid date string
+            }
+
+            $expire_date_str = $request->input('expire_date');
+            $expire_date = DateTime::createFromFormat('d-M-Y', $expire_date_str);
+
+            if ($expire_date !== false) {
+                $expire_date_mysql = $expire_date->format('Y-m-d H:i:s');
+                $activationCodeGroup->expire_date = $expire_date_mysql;
+            } else {
+                // Handle invalid date string
+            }
+            
             $activationCodeGroup->price = $request->input('price');
             $isSaved = $activationCodeGroup->save();
             return response()->json(

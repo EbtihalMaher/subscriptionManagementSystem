@@ -19,26 +19,26 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($activation_codes_groups as $activation_code_group)
-                    <tr id="activation_code_group{{$activation_code_group->id}}_row">
+                @foreach ($activationCodeGroups as $activationCodeGroup)
+                    <tr id="activationCodeGroups{{$activationCodeGroup->id}}_row">
                         <td>{{$loop->index + 1}}</td>
-                        <td>{{$activation_code_group->package_id}}</td>
-                        <td>{{$activation_code_group->group_name}}</td>
-                        <td>{{$activation_code_group->count}}</td>
-                        <td>{{$activation_code_group->start_date}}</td>
-                        <td>{{$activation_code_group->expire_date}}</td>
-                        <td>{{$activation_code_group->price}}</td>
+                        <td>{{$activationCodeGroup->package_id}}</td>
+                        <td>{{$activationCodeGroup->group_name}}</td>
+                        <td>{{$activationCodeGroup->count}}</td>
+                        <td>{{$activationCodeGroup->start_date}}</td>
+                        <td>{{$activationCodeGroup->expire_date}}</td>
+                        <td>{{$activationCodeGroup->price}}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
     <!-- /.card-body -->
-    <div class="card-footer clearfix">
+    {{-- <div class="card-footer clearfix">
         <ul class="pagination pagination-sm m-0 float-right">
-            {{ $activation_codes_groups->links() }}
+            {{ $activationCodeGroups->links() }}
         </ul>
-    </div>
+    </div> --}}
 @endsection
 
 <script>

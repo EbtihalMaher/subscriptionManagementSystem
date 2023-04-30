@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\ActivationCodeGroupController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\EmailVerificationController;
@@ -71,4 +71,5 @@ Route::prefix('/cms/user')->middleware(['auth:user'/*, 'verified'*/])->group(fun
     Route::put('users/{user}/permissions', [UserController::class, 'updatePermissions']);
 
     Route::resource('packages', PackageController::class);
+    Route::resource('activation_codes_groups', ActivationCodeGroupController::class);
 });

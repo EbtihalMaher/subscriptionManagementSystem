@@ -123,7 +123,7 @@
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Packages</div>
+                <div data-i18n="Layouts">Package</div>
             </a>
 
             <ul class="menu-sub">
@@ -135,6 +135,27 @@
 
                 <li class="menu-item">
                     <a href="{{route("packages.create")}}" class="menu-link">
+                    Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Activation Code Group</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('activation_codes_groups.index')}}" class="menu-link">
+                    Index
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route("activation_codes_groups.create")}}" class="menu-link">
                     Create
                     </a>
                 </li>
