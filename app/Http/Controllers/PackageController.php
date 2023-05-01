@@ -42,7 +42,7 @@ class PackageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         $validator = Validator($request->all(), [
             // 'package_id' => 'required|numeric|exists:packages,id',
             'name' => 'required|string',
@@ -58,24 +58,30 @@ class PackageController extends Controller
         ]);
 
         if (!$validator->fails()) {
-            $package = new Package();
+            $packages = new Package();
+
             if($request->hasFile('image'))
             {
-                $image = $request->file('image');
-                $imageName = time() . '.' . $image->extension();
-                $image->storeAs('packages', $imageName, ['disk' => 'public']);
-                $package->image = 'packages/' . $imageName;
+              $file = $request->file('image');
+              $extention = $file->getClientOriginalExtension();  // $ext
+              $filename= time().'.'.$extention;
+              $file->move('assets/uploads/products/',$filename);
+              $packages->image = $filename; // to store in DB
             }
-            $package->name = $request->input('name');
-            $package->description = $request->input('description');
+     
+            
+            $packages->name = $request->input('name');
+            $packages->description = $request->input('description');
             // $package->package_id = $request->input('package_id');
-            $package->price = $request->input('price');
-            $package->duration = $request->input('duration');
-            $package->duration_unit = $request->input('duration_unit');
-            $package->limit = $request->input('limit');
-            $package->is_unlimited = $request->input('is_unlimited');
-            $package->active = $request->input('active') ;
-            $isSaved = $package->save();
+            $packages->price = $request->input('price');
+            $packages->duration = $request->input('duration');
+            $packages->duration_unit = $request->input('duration_unit');
+            $packages->limit = $request->input('limit');
+            $packages->is_unlimited = $request->input('is_unlimited');
+            $packages->active = $request->input('active') ;
+
+
+            $isSaved = $packages->save();
             return response()->json(
                 ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
                 $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST

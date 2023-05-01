@@ -34,9 +34,10 @@
                     <option value="y">Year</option>
                 </select>
             </div>
+
             <div class="form-group mt-3">
                 <label for="image" >image</label>
-                <input class="form-control" type="file"  id="image" />
+                <input class="form-control" type="file"   name="image" id="image" />
             </div>
             <div class="form-group mt-3">
                 <div class="custom-control custom-switch">
@@ -95,22 +96,6 @@
             }
         })
 
-
-    // function performSave() {
-    //     let formData = new FormData();
-    //     // Make a request for a user with a given ID
-    //     axios.post('/cms/user/packages',{
-    //         name: document.getElementById('name').value,
-    //         description: document.getElementById('description').value,
-    //         price: document.getElementById('price').value,
-    //         duration: document.getElementById('duration').value,
-    //         duration_unit: document.getElementById('duration_unit').value,
-    //         image: document.getElementById('image').files[0],
-    //         is_unlimited: document.getElementById('is_unlimited').checked,
-    //         limit: document.getElementById('limit').value,
-    //         active: document.getElementById('active').checked,
-
-    //     })
         .then(function (response) {
             // handle success
             console.log(response);

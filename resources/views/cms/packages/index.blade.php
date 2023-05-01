@@ -31,8 +31,8 @@
                         <td>{{$package->duration}}</td>
                         <td>{{$package->duration_unit ?? 'non'}}</td>
                         
-                        {{-- <td><img src="{{asset('assets/uploads/packages/' .$package->image)}}" class="image"   alt="Image here "></td> --}}
-                        <td><img src="{{Storage::url($package->image)}}" class="image"   alt="Image here "></td>
+                        <td><img src="{{asset('assets/uploads/products/' .$package->image)}}" style="height: 100px; width:100px" class="package-image" alt="Image here "></td>
+                        {{-- <td><img src="{{Storage::url($package->image)}}"  class="image"  alt="Image here "></td> --}}
 
                         <td>{{$package->limit}}</td>
                         <td>
