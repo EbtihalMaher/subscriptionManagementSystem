@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Package;
 use App\Models\PromoCode;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class PromoCodeController extends Controller
 {
@@ -14,7 +16,8 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        //
+        $promo_codes = PromoCode::with('package')->get();
+        return response()->view('cms.promo_codes.index', ['promo_codes' => $promo_codes]);
     }
 
     /**
@@ -24,7 +27,8 @@ class PromoCodeController extends Controller
      */
     public function create()
     {
-        //
+        $packages = Package::get();
+        return response()->view('cms.promo_codes.create', ['packages' => $packages]);
     }
 
     /**
@@ -35,7 +39,28 @@ class PromoCodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator($request->all(), [
+            'package_id' => 'required|numeric|exists:packages,id',
+            'name' => 'required|string',
+            'discount_percent' => 'required|numeric',
+        ]);
+
+        if (!$validator->fails()) {
+            $promo_code = new PromoCode();
+            $promo_code->package_id = $request->input('package_id');
+            $promo_code->name = $request->input('name');
+            $promo_code->discount_percent = $request->input('discount_percent');
+            $isSaved = $promo_code->save();
+            return response()->json(
+                ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
+                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST
+            );
+        } else {
+            return response()->json(
+                ['message' => $validator->getMessageBag()->first()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
 
     /**

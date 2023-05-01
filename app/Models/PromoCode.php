@@ -21,4 +21,7 @@ class PromoCode extends Model
         'discount_percent',
     ];
 
+    public function package() {
+        return $this->belongsTo(Package::class);
+    }
 }

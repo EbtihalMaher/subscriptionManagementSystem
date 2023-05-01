@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivationCodeController;
 use App\Http\Controllers\ActivationCodeGroupController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PackageController;
+use App\Http\Controllers\PromoCodeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -72,4 +74,6 @@ Route::prefix('/cms/user')->middleware(['auth:user'/*, 'verified'*/])->group(fun
 
     Route::resource('packages', PackageController::class);
     Route::resource('activation_codes_groups', ActivationCodeGroupController::class);
+    Route::resource('activation_codes', ActivationCodeController::class);
+    Route::resource('promo_codes', PromoCodeController::class);
 });

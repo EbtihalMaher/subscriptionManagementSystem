@@ -14,11 +14,15 @@
                 <label for="name">Promo Code Name</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter the name">
             </div>
-            <div class="form-group">
-                <label for="package_id">Package Id</label>
-                <input type="text" class="form-control" id="package_id" placeholder="Enter the packageId">
-            </div>
-            <div class="form-group">
+            <div class="form-group mt-3">
+                <label>Package</label>
+                <select class="form-control" id="package_id">
+                    @foreach ($packages as $package)
+                    <option value="{{$package->id}}">{{$package->name}}</option>
+                    @endforeach
+                </select>
+            </div>  
+            <div class="form-group mt-3">
                 <label for="discount_percent">Discount</label>
                 <input type="number" class="form-control" id="discount_percent" placeholder="Enter the discount percent">
             </div>
@@ -37,7 +41,7 @@
 <script>
     function performSave() {
         // Make a request for a user with a given ID
-        axios.post('/cms/admin/promo_codes',{
+        axios.post('/cms/user/promo_codes',{
             name: document.getElementById('name').value,
             package_id: document.getElementById('package_id').value,
             discount_percent: document.getElementById('discount_percent').value,
