@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\ActivationCode;
+use App\Models\ActivationCodeGroup;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActivationCodeController extends Controller
 {
@@ -14,7 +16,8 @@ class ActivationCodeController extends Controller
      */
     public function index()
     {
-        //
+        $activationCodes = ActivationCode::with('activationCodeGroup')->get();
+        return response()->view('cms.activation_codes.index', ['activationCodes' => $activationCodes]);
     }
 
     /**
@@ -24,7 +27,8 @@ class ActivationCodeController extends Controller
      */
     public function create()
     {
-        //
+        $activationCodeGroups = ActivationCodeGroup::get();
+        return response()->view('cms.activation_codes.create', ['activationCodeGroups' => $activationCodeGroups]);
     }
 
     /**
@@ -35,7 +39,28 @@ class ActivationCodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator($request->all(), [
+            'group_id' => 'required|numeric|exists:activation_code_groups,id',
+            'number' => 'required|numeric',
+
+
+        ]);
+
+        if (!$validator->fails()) {
+            $activationCode = new ActivationCode();
+            $activationCode->group_id = $request->input('group_id');
+            $activationCode->number = $request->input('number');
+            $isSaved = $activationCode->save();
+            return response()->json(
+                ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
+                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST
+            );
+        } else {
+            return response()->json(
+                ['message' => $validator->getMessageBag()->first()],
+                Response::HTTP_BAD_REQUEST
+            );
+        }
     }
 
     /**

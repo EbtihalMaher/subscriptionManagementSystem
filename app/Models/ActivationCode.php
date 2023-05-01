@@ -20,4 +20,7 @@ class ActivationCode extends Model
         'number', 
     ];
 
+    public function activationCodeGroup() {
+        return $this->belongsTo(ActivationCodeGroup::class);
+    }
 }

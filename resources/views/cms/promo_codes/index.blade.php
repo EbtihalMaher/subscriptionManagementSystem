@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 @foreach ($promo_codes as $promo_code)
-                    <tr id="promo_code_{{$promo_code->id}}_row">
+                    <tr id="promo_codes_{{$promo_code->id}}_row">
                         <td>{{$loop->index + 1}}</td>
                         <td>{{$promo_code->name}}</td>
                         <td>{{$promo_code->package_id}}</td>
@@ -28,11 +28,11 @@
         </table>
     </div>
     <!-- /.card-body -->
-    <div class="card-footer clearfix">
+    {{-- <div class="card-footer clearfix">
         <ul class="pagination pagination-sm m-0 float-right">
             {{ $promo_codes->links() }}
         </ul>
-    </div>
+    </div> --}}
 @endsection
 
 <script>

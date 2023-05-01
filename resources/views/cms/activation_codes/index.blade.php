@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card-header">
-        <h3 class="card-title">Activation Codes </h3>
+        <h3 class="card-title">Activation Codes</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -16,21 +16,22 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($activation_codes as $activation_code )
-                    <tr id="activation_codes_{{$activation_codes->id}}_row">
-                        <td>{{$activation_codes->group_id}}</td>
-                        <td>{{$activation_codes->number}}</td>
+                @foreach ($activationCodes as $activationCode)
+                    <tr id="activationCodes_{{$activationCode->id}}_row">
+                        <td>{{$loop->index + 1}}</td>
+                        <td>{{$activationCode->group_id}}</td>
+                        <td>{{$activationCode->number}}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
     <!-- /.card-body -->
-    <div class="card-footer clearfix">
+    {{-- <div class="card-footer clearfix">
         <ul class="pagination pagination-sm m-0 float-right">
             {{ $activation_codes->links() }}
         </ul>
-    </div>
+    </div> --}}
 @endsection
 
 <script>

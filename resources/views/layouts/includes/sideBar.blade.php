@@ -162,6 +162,48 @@
             </ul>
         </li>
 
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Activation Code </div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('activation_codes.index')}}" class="menu-link">
+                    Index
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route("activation_codes.create")}}" class="menu-link">
+                    Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">Promo Code </div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('promo_codes.index')}}" class="menu-link">
+                    Index
+                    </a>
+                </li>
+
+                <li class="menu-item">
+                    <a href="{{route("promo_codes.create")}}" class="menu-link">
+                    Create
+                    </a>
+                </li>
+            </ul>
+        </li>
+
         {{-- <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
