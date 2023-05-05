@@ -23,4 +23,8 @@ class ActivationCode extends Model
     public function activationCodeGroup() {
         return $this->belongsTo(ActivationCodeGroup::class);
     }
+
+    public function scopeByEnterprise ($query) {
+        return $query->where('enterprise_id', auth()->user()->enterprise_id);
+    }
 }

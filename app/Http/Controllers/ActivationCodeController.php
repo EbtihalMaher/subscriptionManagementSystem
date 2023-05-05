@@ -25,9 +25,10 @@ class ActivationCodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function create()
     {
-        $activationCodeGroups = ActivationCodeGroup::get();
+        $activationCodeGroups = ActivationCodeGroup::ByEnterprise()->get();
         return response()->view('cms.activation_codes.create', ['activationCodeGroups' => $activationCodeGroups]);
     }
 
@@ -50,6 +51,7 @@ class ActivationCodeController extends Controller
             $activationCode = new ActivationCode();
             $activationCode->group_id = $request->input('group_id');
             $activationCode->number = $request->input('number');
+            $activationCode->enterprise_id = auth()->user()->enterprise_id;
             $isSaved = $activationCode->save();
             return response()->json(
                 ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
