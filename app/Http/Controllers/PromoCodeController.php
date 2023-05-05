@@ -27,7 +27,7 @@ class PromoCodeController extends Controller
      */
     public function create()
     {
-        $packages = Package::get();
+        $packages = Package::ByEnterprise()->get();
         return response()->view('cms.promo_codes.create', ['packages' => $packages]);
     }
 
@@ -50,6 +50,7 @@ class PromoCodeController extends Controller
             $promo_code->package_id = $request->input('package_id');
             $promo_code->name = $request->input('name');
             $promo_code->discount_percent = $request->input('discount_percent');
+            $promo_code->enterprise_id = auth()->user()->enterprise_id;
             $isSaved = $promo_code->save();
             return response()->json(
                 ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],

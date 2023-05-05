@@ -26,7 +26,7 @@ class PackageController extends Controller
      */
     public function create()
     {
-        $packages = Package::byEnterprise()->get();
+        $packages = Package::ByEnterprise()->get();
         $packages = Package::where('active','=',true)->get();
         $packages = Package::where('is_unlimited','=',true)->get();
 

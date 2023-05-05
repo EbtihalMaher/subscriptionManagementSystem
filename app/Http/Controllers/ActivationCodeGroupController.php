@@ -31,7 +31,7 @@ class ActivationCodeGroupController extends Controller
     public function create()
     {
 
-        $packages = Package::get();
+        $packages = Package::ByEnterprise()->get();
         return response()->view('cms.activation_codes_groups.create', ['packages' => $packages]);
     }
 
@@ -83,6 +83,7 @@ class ActivationCodeGroupController extends Controller
             }
             
             $activationCodeGroup->price = $request->input('price');
+            $activationCodeGroup->enterprise_id = auth()->user()->enterprise_id;
             $isSaved = $activationCodeGroup->save();
 
             if ($isSaved) {
