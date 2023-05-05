@@ -24,6 +24,7 @@
                         <td>{{$enterprise->name}}</td>
                         <td>{{$enterprise->email}}</td>
                         <td>{{$enterprise->contact}}</td>
+                        <td>{{$enterprise->api_key}}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="{{route('enterprises.edit',$enterprise->id)}}" class="btn btn-warning">

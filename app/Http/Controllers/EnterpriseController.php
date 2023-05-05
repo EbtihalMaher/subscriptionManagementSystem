@@ -65,6 +65,7 @@ class EnterpriseController extends Controller
             $enterprise->name = $request->input('name');
             $enterprise->email = $request->input('email');
             $enterprise->contact = $request->input('contact');
+            $enterprise->api_key = Str::random(10);
             $password = Str::random(10);
             $isSaved = $enterprise->save();
             // if ($isSaved) {

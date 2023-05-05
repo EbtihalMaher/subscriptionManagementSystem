@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivationCode;
 use App\Models\ActivationCodeGroup;
 use App\Models\Package;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use DateTime;
+use Illuminate\Support\Str;
 
 class ActivationCodeGroupController extends Controller
 {
@@ -82,6 +84,19 @@ class ActivationCodeGroupController extends Controller
             
             $activationCodeGroup->price = $request->input('price');
             $isSaved = $activationCodeGroup->save();
+
+            if ($isSaved) {
+                $count = $request->count;
+                $codes = [];
+                for ($i = 0 ; $i < $count ; $i++) {
+                    $codes[] = [
+                        'group_id'  => $activationCodeGroup->id,
+                        'number'    => Str::random(6),
+                    ];
+                }
+                ActivationCode::query()->insert($codes);
+            }
+
             return response()->json(
                 ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
                 $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST

@@ -10,15 +10,15 @@
             <thead>
                 <tr>
                     <th style="width: 5%">#</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Duration</th>   
-                    <th>Duration Unit</th>
-                    <th>Image</th>
-                    <th>Limit</th>
-                    <th>IS Unlimited</th>
-                    <th>Active</th>
+                    <th style="width: 15%">Name</th>
+                    <th style="width: 20%">Description</th>
+                    <th style="width: 10%">Price</th>
+                    <th style="width: 10%">Duration</th>   
+                    <th style="width: 10%">Duration Unit</th>
+                    <th style="width: 10%">Image</th>
+                    <th style="width: 10%">Limit</th>
+                    <th style="width: 5%">IS Unlimited</th>
+                    <th style="width: 5%">Active</th>
                 </tr>
             </thead>
             <tbody>
