@@ -23,7 +23,7 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        $promo_codes = PromoCode::with('package')->get();
+        $promo_codes = PromoCode::with('package')->withTrashed()->get();
         return response()->view('cms.promo_codes.index', ['promo_codes' => $promo_codes]);
     }
 
@@ -113,6 +113,5 @@ class PromoCodeController extends Controller
      */
     public function destroy(PromoCode $promoCode)
     {
-        //
     }
 }

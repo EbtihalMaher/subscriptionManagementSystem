@@ -13,6 +13,8 @@
                     <th>Name</th>
                     <th>Package Id</th>
                     <th>Discount Percent</th>
+                    <th>Settings</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -22,6 +24,14 @@
                         <td>{{$promo_code->name}}</td>
                         <td>{{$promo_code->package_id}}</td>
                         <td>{{$promo_code->discount_percent}}</td>
+                        <td>
+                            {{-- <div class="btn-group"> --}}
+                                <a href="#" onclick="confirmDelete('{{$promo_code->id}}')"
+                                    class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            {{-- </div> --}}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -36,5 +46,21 @@
 @endsection
 
 <script>
+    <script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    performDelete(id);
+                }
+        })
+    }
     
 </script>

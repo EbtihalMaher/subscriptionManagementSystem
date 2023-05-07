@@ -16,6 +16,9 @@
                     <th>Start date</th>   
                     <th>Expire date</th>
                     <th>Price</th>
+                    <th> Activation Codes</th>
+                    <th>Settings</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +38,14 @@
                                 </a>
                             </div>
                         </td>
+                        <td>
+                            {{-- <div class="btn-group"> --}}
+                                <a href="#" onclick="confirmDelete('{{$activationCodeGroup->id}}')"
+                                    class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            {{-- </div> --}}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -49,5 +60,21 @@
 @endsection
 
 <script>
+    <script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    performDelete(id);
+                }
+        })
+    }
     
 </script>

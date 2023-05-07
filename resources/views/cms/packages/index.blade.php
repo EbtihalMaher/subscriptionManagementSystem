@@ -9,16 +9,18 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th style="width: 5%">#</th>
-                    <th style="width: 15%">Name</th>
-                    <th style="width: 20%">Description</th>
-                    <th style="width: 10%">Price</th>
-                    <th style="width: 10%">Duration</th>   
-                    <th style="width: 10%">Duration Unit</th>
-                    <th style="width: 10%">Image</th>
-                    <th style="width: 10%">Limit</th>
-                    <th style="width: 5%">IS Unlimited</th>
-                    <th style="width: 5%">Active</th>
+                    <th style="width: 1%">#</th>
+                    <th >Name</th>
+                    <th >Description</th>
+                    <th >Price</th>
+                    <th >Duration</th>   
+                    <th style="text-align:center;">Duration Unit</th>
+                    <th >Image</th>
+                    <th >Limit</th>
+                    <th style="text-align:center;">IS Unlimited</th>
+                    <th >Active</th>
+                    <th style="width: 3%">Settings</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +43,15 @@
                         <td>
                             <span class="badge @if($package->active) bg-success @else bg-danger @endif">{{$package->active}}</span>
                         </td>
+
+                        <td>
+                            {{-- <div class="btn-group"> --}}
+                                <a href="#" onclick="confirmDelete('{{$package->id}}')"
+                                    class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            {{-- </div> --}}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -55,5 +66,21 @@
 @endsection
 
 <script>
-    
+   <script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    performDelete(id);
+                }
+        })
+    }
+     
 </script>
