@@ -22,6 +22,7 @@
                         <td>{{$activationCode->group_id}}</td>
                         <td>{{$activationCode->number}}</td>
                     </tr>
+
                 @endforeach
             </tbody>
         </table>

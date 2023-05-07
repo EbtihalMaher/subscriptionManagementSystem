@@ -28,6 +28,13 @@
                         <td>{{$activationCodeGroup->start_date}}</td>
                         <td>{{$activationCodeGroup->expire_date}}</td>
                         <td>{{$activationCodeGroup->price}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="{{route('activation_codes.index' , ['group_id' => $activationCodeGroup->id])}}" class="btn btn-warning">
+                                    Activation Codes
+                                </a>
+                            </div>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

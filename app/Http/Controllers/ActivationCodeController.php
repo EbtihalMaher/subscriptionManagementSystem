@@ -14,10 +14,12 @@ class ActivationCodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $activationCodes = ActivationCode::with('activationCodeGroup')->get();
-        return response()->view('cms.activation_codes.index', ['activationCodes' => $activationCodes]);
+        $activationCodes = ActivationCode::with('activationCodeGroup')->where('group_id', $request->query('group_id'))->get();
+        return response()->view('cms.activation_codes.index',  ['activationCodes' => $activationCodes]);
+        // $activationCodes = ActivationCode::with('activationCodeGroup')->get();
+        // return response()->view('cms.activation_codes.index', ['activationCodes' => $activationCodes]);
     }
 
     /**
