@@ -79,7 +79,6 @@ class PackageController extends Controller
             $packages->limit = $request->input('limit');
             $packages->is_unlimited = $request->input('is_unlimited');
             $packages->active = $request->input('active') ;
-            $packages->enterprise_id = auth()->user()->enterprise_id;
 
 
             $isSaved = $packages->save();
