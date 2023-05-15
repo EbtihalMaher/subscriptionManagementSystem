@@ -46,7 +46,6 @@
 @endsection
 
 <script>
-    <script>
     function confirmDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -61,6 +60,30 @@
                     performDelete(id);
                 }
         })
+    }
+
+    function performDelete(id) {
+        axios.delete('/cms/user/promo_codes/'+id)
+        .then(function (response) {
+            console.log(response);
+            showSwalMessage(response.data);
+            window.location.href ='/cms/user/promo_codes';
+        })
+        .catch(function (error) {
+            console.log(error);
+            showSwalMessage(error.response.data);
+        })
+        .then(function () {
+            // always executed
+        });
+    }
+
+    function showSwalMessage(data) {
+        Swal.fire(
+            data.title,
+            data.message,
+            data.icon,
+        )
     }
     
 </script>

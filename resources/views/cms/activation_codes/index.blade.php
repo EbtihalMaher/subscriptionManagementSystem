@@ -12,7 +12,6 @@
                     <th style="width: 5%">#</th>
                     <th>Group Id</th>
                     <th>Number</th>
-                    <th>Settings</th>
 
                     
                 </tr>
@@ -23,14 +22,7 @@
                         <td>{{$loop->index + 1}}</td>
                         <td>{{$activationCode->group_id}}</td>
                         <td>{{$activationCode->number}}</td>
-                        <td>
-                            {{-- <div class="btn-group"> --}}
-                                <a href="#" onclick="confirmDelete('{{$activationCode->id}}')"
-                                    class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            {{-- </div> --}}
-                        </td>
+                     
                     </tr>
 
                 @endforeach
@@ -50,20 +42,5 @@
 @endsection
 
 <script>
-    function confirmDelete(id) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    performDelete(id);
-                }
-        })
-    }
-    
+   
 </script>
