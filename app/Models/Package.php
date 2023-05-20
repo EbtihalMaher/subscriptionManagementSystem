@@ -33,7 +33,10 @@ class Package extends Model
 
     ];
 
-
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
 
     public function is_unlimited(){
         return new Attribute(get:fn () =>$this->is_unlimited ? 'is_unlimited': 'limited');
