@@ -86,46 +86,6 @@ class ClientController extends Controller
 
     return response()->json(['subscription' => $subscription], 201);
 
-
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string',
-        //     'email' => 'required|email|unique:clients',
-        //     'phone_number' => 'required|string',
-        //     'enterprise_id' => 'required|exists:enterprises,id',
-        // ]);
-
-        // $client = Client::where('email', $validatedData['email'])->first();
-
-        // if ($client) {
-        //     return response()->json(['message' => 'Client with this email already exists'], 409);
-        // }
-
-    /****************************************************** */
-        // $existingClient = Client::where('email', $validatedData['email'])->first();
-
-        // if ($existingClient) {
-        //     return response()->json(['message' => 'Client with this email already exists'], Response::HTTP_CONFLICT);
-        // }
-
-        // $client = new Client($validatedData);
-        // $client->save();
-
-        // return response()->json($client, Response::HTTP_CREATED);
-
-    /****************************************************** */
-        
-        // $client = Client::where('email', $validatedData['email'])->newOrFirst($validatedData);
-        // $client->save();
-
-        // return response()->json(['client' => $client], 201);
-
-    /****************************************************** */
-
-        // $client = Client::updateOrCreate(['email' => $validatedData['email']], $validatedData);
-
-        // return response()->json($client, Response::HTTP_CREATED);
-
-        //  $client = Client::create($validatedData);
     
     }
 
