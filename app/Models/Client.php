@@ -16,6 +16,11 @@ class Client extends Model
         'enterprise_id'
     ];
 
+    public function onlinePayments()
+    {
+        return $this->hasMany(OnlinePayment::class);
+    }
+
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);
