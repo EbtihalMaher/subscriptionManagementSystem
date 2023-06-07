@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('enterprises', function (Blueprint $table) {
-            $table->string('api_key',10)->unique();
-
-        });
+        if (!Schema::hasColumn('enterprises', 'api_key')) {
+            Schema::table('enterprises', function (Blueprint $table) {
+                $table->string('api_key', 10)->unique();
+            });
+        }
     }
 
     /**
@@ -26,8 +27,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('enterprises', function (Blueprint $table) {
-            //
-        });
+        if (Schema::hasColumn('enterprises', 'api_key')) {
+            Schema::table('enterprises', function (Blueprint $table) {
+                $table->dropColumn('api_key');
+            });
+        }
     }
 };
