@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card-header">
-        <h3 class="card-title">Create User</h3>
+        <h3 class="card-title">Create Package</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
@@ -10,7 +10,7 @@
     <form id="page-form" enctype="multipart/form-data">
         <div class="card-body ">
             @csrf
-            <div class="form-group mt-3">
+            <div class="form-group">
                 <label for="name">name</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter Full name">
             </div>

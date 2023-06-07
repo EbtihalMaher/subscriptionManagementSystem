@@ -22,7 +22,14 @@
                         <td>{{$loop->index + 1}}</td>
                         <td>{{$activationCode->group_id}}</td>
                         <td>{{$activationCode->number}}</td>
-                     
+                        <td>
+                            {{-- <div class="btn-group"> --}}
+                                <a href="#" onclick="confirmDelete('{{$activationCode->id}}')"
+                                    class="btn btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            {{-- </div> --}}
+                        </td>
                     </tr>
 
                 @endforeach

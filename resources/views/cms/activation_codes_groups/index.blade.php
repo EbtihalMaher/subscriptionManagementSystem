@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card-header">
-        <h3 class="card-title">Bordered Table</h3>
+        <h3 class="card-title">Activation Codes Groups</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -42,7 +42,7 @@
                             {{-- <div class="btn-group"> --}}
                                 <a href="#" onclick="confirmDelete('{{$activationCodeGroup->id}}')"
                                     class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fas fa-trash">Delete</i>
                                 </a>
                             {{-- </div> --}}
                         </td>
