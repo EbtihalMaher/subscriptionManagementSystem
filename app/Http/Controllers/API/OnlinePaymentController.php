@@ -10,9 +10,8 @@ use App\Models\OnlinePayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Validator;
-
+use Symfony\Component\HttpFoundation\Response;
 
 class OnlinePaymentController extends Controller
 {
@@ -32,43 +31,53 @@ class OnlinePaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'client_id' => 'required',
+            'package_id' => 'required',
+            'payment_method' => 'required',
+            'promo_code' => 'string|nullable',
+
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first()], Response::HTTP_BAD_REQUEST);
         }
-    
-        $promo_code = $request->input('name');
-        $subscription = Client::where('name', $promo_code)->first();
-    
-        if ($subscription) {
-            $today = Carbon::now()->toDateString();
-            $start_date = $subscription->start_date;
-            $end_date = $subscription->end_date;
-    
-            if ($start_date <= $today && $end_date >= $today) {
-                $amount = $request->input('amount');
-                $discount_percent = $subscription->promo_code->discount_percent;
-                $discount_amount = $amount * ($discount_percent / 100);
-                $amount -= $discount_amount;
-    
-                $payment = new OnlinePayment();
-                $payment->amount = $amount;
-                $payment->save();
-    
-                return response()->json(['message' => 'Payment created successfully', 'payment' => $payment], Response::HTTP_CREATED);
-            } else {
-                return response()->json(['message' => 'Promo code is not valid for the current date'], Response::HTTP_BAD_REQUEST);
+
+        $client_id = $request->input('client_id');
+        $package_id = $request->input('package_id');
+        $payment_method = $request->input('payment_method');
+
+        $package = Package::findOrFail($package_id);
+        $amount = $package->price;
+
+        if ($request->has('promo_code')) {
+            $promo_code = $request->input('promo_code');
+            $promoCode = PromoCode::where('name', $promo_code)->first();
+
+            if ($promoCode) {
+                $today = Carbon::now()->toDateString();
+                $start_date = $promoCode->start_date;
+                $end_date = $promoCode->end_date;
+
+                if ($start_date <= $today && $end_date >= $today) {
+                    $discount_percent = $promoCode->discount_percent;
+
+                    $discount_amount = $amount * ($discount_percent / 100);
+                    $amount -= $discount_amount;
+                }
             }
-        } else {
-            return response()->json(['message' => 'Promo code not found'], Response::HTTP_NOT_FOUND);
         }
+
+        $transaction_number = Str::random(12);
+
+        $onlinePayment = OnlinePayment::create([
+            'client_id' => $client_id,
+            'amount' => $amount,
+            'transaction_number' => $transaction_number,
+            'payment_method' => $payment_method,
+        ]);
+
+        return response()->json(['online_payment' => $onlinePayment], Response::HTTP_CREATED);
     }
-    
-   
-    
-    
 
     public function show($id)
     {
