@@ -11,7 +11,7 @@ class OnlinePayment extends Model
     
     protected $table = 'online_payments';
 
-    protected $fillable = ['client_id', 'amount', 'transaction_number', 'payment_method'];
+    protected $fillable = ['client_id', 'amount', 'transaction_number', 'payment_method','promo_code_id'];
 
 
     public function client()
