@@ -13,8 +13,14 @@ class OnlinePayment extends Model
 
     protected $fillable = ['client_id', 'amount', 'transaction_number', 'payment_method'];
 
+
     public function client()
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function promoCode()
+{
+    return $this->belongsTo(PromoCode::class);
+}
 }
