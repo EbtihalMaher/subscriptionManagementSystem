@@ -25,7 +25,7 @@ class ActivationCodeGroupController extends Controller
      */
     public function index()
     {
-        $activationCodeGroups = ActivationCodeGroup::with('package')->get();
+        $activationCodeGroups = ActivationCodeGroup::with('package')->withTrashed()->get();
         return response()->view('cms.activation_codes_groups.index', ['activationCodeGroups' => $activationCodeGroups]);
     }
 
@@ -159,7 +159,11 @@ class ActivationCodeGroupController extends Controller
      */
     public function destroy(ActivationCodeGroup $activationCodeGroup)
     {
-        //
+        $isDeleted = $activationCodeGroup->delete();
+        return response()->json(
+            ['message' => $isDeleted ? 'Deleted successfully' : 'Delete failed'],
+            $isDeleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+        );
     }
 }
 

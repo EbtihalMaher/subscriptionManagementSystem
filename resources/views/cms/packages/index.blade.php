@@ -19,7 +19,7 @@
                     <th >Limit</th>
                     <th style="text-align:center;">IS Unlimited</th>
                     <th >Active</th>
-                    <th style="width: 3%">Settings</th>
+                    <th style="width: 40px">Settings</th>
 
                 </tr>
             </thead>
@@ -46,9 +46,8 @@
 
                         <td>
                             {{-- <div class="btn-group"> --}}
-                                <a href="#" onclick="confirmDelete('{{$package->id}}')"
-                                    class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
+                                <a href="#" onclick="confirmDelete('{{$package->id}}')" class="btn btn-danger">
+                                    <i class="fas fa-trash"> Delete</i>
                                 </a>
                             {{-- </div> --}}
                         </td>
@@ -66,7 +65,7 @@
 @endsection
 
 <script>
-   <script>
+  
     function confirmDelete(id) {
         Swal.fire({
             title: 'Are you sure?',

@@ -21,7 +21,7 @@ class PackageController extends Controller
      */
     public function index()
     {
-        $packages = Package::with('enterprise')->get();
+        $packages = Package::with('enterprise')->withTrashed()->get();
         return response()->view('cms.packages.index', ['packages' => $packages]);
     }
 
@@ -142,6 +142,10 @@ class PackageController extends Controller
      */
     public function destroy(Package $package)
     {
-        //
+        $isDeleted = $package->delete();
+        return response()->json(
+            ['message' => $isDeleted ? 'Deleted successfully' : 'Delete failed'],
+            $isDeleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+        );
     }
 }

@@ -116,6 +116,10 @@ class ActivationCodeController extends Controller
      */
     public function destroy(ActivationCode $activationCode)
     {
-        //
+        // $isDeleted = $activationCode->delete();
+        // return response()->json(
+        //     ['message' => $isDeleted ? 'Deleted successfully' : 'Delete failed'],
+        //     $isDeleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+        // );
     }
 }

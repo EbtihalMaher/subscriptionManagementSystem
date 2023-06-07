@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Package extends Model
 {
+    use SoftDeletes;
     use HasFactory, HasRoles, Notifiable;
     /**
      * The attributes that are mass assignable.
@@ -31,7 +33,10 @@ class Package extends Model
 
     ];
 
-
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
 
     public function is_unlimited(){
         return new Attribute(get:fn () =>$this->is_unlimited ? 'is_unlimited': 'limited');

@@ -23,7 +23,7 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        $promo_codes = PromoCode::with('package')->withTrashed()->get();
+        $promo_codes = PromoCode::with('package')->get();
         return response()->view('cms.promo_codes.index', ['promo_codes' => $promo_codes]);
     }
 
@@ -113,5 +113,11 @@ class PromoCodeController extends Controller
      */
     public function destroy(PromoCode $promoCode)
     {
+
+        $isDeleted = $promoCode->delete();
+        return response()->json(
+            ['message' => $isDeleted ? 'Deleted successfully' : 'Delete failed'],
+            $isDeleted ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
+        );
     }
 }

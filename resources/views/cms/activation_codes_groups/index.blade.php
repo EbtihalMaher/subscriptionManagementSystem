@@ -60,7 +60,7 @@
 @endsection
 
 <script>
-    <script>
+    
     function confirmDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
