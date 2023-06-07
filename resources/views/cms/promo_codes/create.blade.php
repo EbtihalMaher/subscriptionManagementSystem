@@ -14,14 +14,27 @@
                 <label for="name">Promo Code Name</label>
                 <input type="text" class="form-control" id="name" placeholder="Enter the name">
             </div>
-            <div class="form-group mt-3">
+
+            {{-- <div class="form-group mt-3">
                 <label>Package</label>
                 <select class="form-control" id="package_id">
                     @foreach ($packages as $package)
                     <option value="{{$package->id}}">{{$package->name}}</option>
                     @endforeach
                 </select>
-            </div>  
+            </div>  --}}
+
+            <div class="form-group mt-3">
+                <label for="package_id">Package</label>
+                <select class="form-control" id="package_id" name="package_id">
+                    @foreach ($packages as $package)
+                        <option value="{{ $package->id }}">{{ $package->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            
+            
             <div class="form-group mt-3">
                 <label for="discount_percent">Discount</label>
                 <input type="number" class="form-control" id="discount_percent" placeholder="Enter the discount percent">

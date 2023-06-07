@@ -34,6 +34,9 @@ class PromoCodeController extends Controller
      */
     public function create()
     {
+        // $packages = Package::ByEnterprise()->get();
+        // return view('cms.promo_codes.create', ['packages' => $packages]);
+
         $packages = Package::ByEnterprise()->get();
         return response()->view('cms.promo_codes.create', ['packages' => $packages]);
     }

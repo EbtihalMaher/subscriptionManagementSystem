@@ -27,70 +27,70 @@ class ClientController extends Controller
     }
 
     public function store(Request $request)
-{
-    $client = Client::where('email', $request->email)->first();
+    {
+        $client = Client::where('email', $request->email)->first();
 
-    if (!$client) {
-        $client = Client::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'enterprise_id' => $request->enterprise_id,
-        ]);
-    }
-
-    $package = Package::findOrFail($request->package_id);
-    $duration = $package->duration;
-    $durationUnit = $package->duration_unit;
-
-    $lastSubscription = Subscription::where('client_id', $client->id)
-        ->orderBy('end_date', 'desc')
-        ->first();
-
-    if ($lastSubscription && Carbon::parse($lastSubscription->end_date)->isFuture()) {
-        $startDate = Carbon::parse($lastSubscription->end_date)->addDay();
-    } else {
-        $startDate = Carbon::now();
-    }
-
-    $endDate = $startDate->copy();
-    switch ($durationUnit) {
-        case 'd':
-            $endDate->addDays($duration);
-            break;
-        case 'm':
-            $endDate->addMonths($duration);
-            break;
-        case 'y':
-            $endDate->addYears($duration);
-            break;
-        default:
-            return response()->json(['message' => 'Unsupported duration unit'], Response::HTTP_BAD_REQUEST);
-    }
-
-    $onlinePaymentId = null;
-    $transaction_number = $request->input('transaction_number');
-    if (!empty($transaction_number)) {
-        $onlinePayment = OnlinePayment::where('transaction_number', $transaction_number)->first();
-        if (!$onlinePayment) {
-            return response()->json(['message' => 'Invalid transaction number'], Response::HTTP_BAD_REQUEST);
+        if (!$client) {
+            $client = Client::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'enterprise_id' => $request->enterprise_id,
+            ]);
         }
-        $onlinePaymentId = $onlinePayment->id;
+
+        $package = Package::findOrFail($request->package_id);
+        $duration = $package->duration;
+        $durationUnit = $package->duration_unit;
+
+        $lastSubscription = Subscription::where('client_id', $client->id)
+            ->orderBy('end_date', 'desc')
+            ->first();
+
+        if ($lastSubscription && Carbon::parse($lastSubscription->end_date)->isFuture()) {
+            $startDate = Carbon::parse($lastSubscription->end_date)->addDay();
+        } else {
+            $startDate = Carbon::now();
+        }
+
+        $endDate = $startDate->copy();
+        switch ($durationUnit) {
+            case 'd':
+                $endDate->addDays($duration);
+                break;
+            case 'm':
+                $endDate->addMonths($duration);
+                break;
+            case 'y':
+                $endDate->addYears($duration);
+                break;
+            default:
+                return response()->json(['message' => 'Unsupported duration unit'], Response::HTTP_BAD_REQUEST);
+        }
+
+        $onlinePaymentId = null;
+        $transaction_number = $request->input('transaction_number');
+        if (!empty($transaction_number)) {
+            $onlinePayment = OnlinePayment::where('transaction_number', $transaction_number)->first();
+            if (!$onlinePayment) {
+                return response()->json(['message' => 'Invalid transaction number'], Response::HTTP_BAD_REQUEST);
+            }
+            $onlinePaymentId = $onlinePayment->id;
+        }
+
+        $subscription = Subscription::create([
+            'client_id' => $client->id,
+            'package_id' => $request->package_id,
+            'enterprise_id' => $client->enterprise_id,
+            'online_payment_id' => $onlinePaymentId,
+            'subscription_method' => 'online',
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'limit' => $package->limit,
+        ]);
+
+        return response()->json(['subscription' => $subscription], 201);
     }
-
-    $subscription = Subscription::create([
-        'client_id' => $client->id,
-        'package_id' => $request->package_id,
-        'enterprise_id' => $client->enterprise_id,
-        'online_payment_id' => $onlinePaymentId,
-        'subscription_method' => 'online',
-        'start_date' => $startDate,
-        'end_date' => $endDate,
-        'limit' => $package->limit,
-    ]);
-
-    return response()->json(['subscription' => $subscription], 201);
-}
 
 
     public function show(Client $client)

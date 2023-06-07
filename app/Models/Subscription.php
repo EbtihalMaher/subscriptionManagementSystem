@@ -34,5 +34,10 @@ class Subscription extends Model
     {
         return $this->belongsTo(Package::class);
     }
+    
+    public function promoCode()
+    {
+        return $this->belongsTo(PromoCode::class, 'promo_code_id');
+    }
 
 }

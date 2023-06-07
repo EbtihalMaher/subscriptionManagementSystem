@@ -27,6 +27,11 @@ class PromoCode extends Model
         return $this->belongsTo(Package::class);
     }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class, 'promo_code_id');
+    }
+
     public function scopeByEnterprise ($query) {
         return $query->where('enterprise_id', auth()->user()->enterprise_id);
     }
