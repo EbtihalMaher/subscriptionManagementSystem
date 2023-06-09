@@ -13,7 +13,8 @@ class Client extends Model
         'name',
         'email', 
         'phone_number', 
-        'enterprise_id'
+        'enterprise_id',
+       
     ];
 
     public function onlinePayments()

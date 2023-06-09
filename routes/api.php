@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/clients', 'App\Http\Controllers\API\ClientController@store');
+
 // Route::post('/clients/subscriptions', 'App\Http\Controllers\API\SubscriptionController@store');
 Route::post('/online-payments', [OnlinePaymentController::class, 'store']);
 
