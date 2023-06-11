@@ -15,13 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClientController extends Controller
 {
-    
+
     public function index()
     {
         //
     }
 
-   
+
     public function create()
     {
         //
@@ -86,7 +86,7 @@ class ClientController extends Controller
     $onlinePaymentId = null;
     $transaction_number = $request->input('transaction_number');
     $activationCode = $request->input('activation_code');
-    
+
     if (!empty($transaction_number)) {
         $onlinePayment = OnlinePayment::where('transaction_number', $transaction_number)->first();
 
@@ -109,7 +109,7 @@ class ClientController extends Controller
         $start_date = $activation->start_date;
         $end_date = $activation->end_date;
 
-        if ($start_date > $today || $end_date < $today) {
+        if ($start_date >= $today || $end_date <= $today) {
             return response()->json(['message' => 'Activation code is not valid'], Response::HTTP_BAD_REQUEST);
         }
     }
@@ -131,7 +131,7 @@ class ClientController extends Controller
     return response()->json(['subscription' => $subscription], 201);
 }
 
-   
+
 //     public function store(Request $request)
 // {
 //     $client = Client::where('email', $request->email)->first();
@@ -224,13 +224,13 @@ class ClientController extends Controller
         //
     }
 
-    
+
     public function edit(Client $client)
     {
         //
     }
 
-   
+
     public function update(Request $request, Client $client)
     {
         //
