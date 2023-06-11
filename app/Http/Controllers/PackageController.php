@@ -48,7 +48,7 @@ class PackageController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
+    {
         $validator = Validator($request->all(), [
             // 'package_id' => 'required|numeric|exists:packages,id',
             'name' => 'required|string',
@@ -74,8 +74,8 @@ class PackageController extends Controller
               $file->move('assets/uploads/products/',$filename);
               $packages->image = $filename; // to store in DB
             }
-     
-            
+
+
             $packages->name = $request->input('name');
             $packages->description = $request->input('description');
             // $package->package_id = $request->input('package_id');
@@ -85,6 +85,7 @@ class PackageController extends Controller
             $packages->limit = $request->input('limit');
             $packages->is_unlimited = $request->input('is_unlimited');
             $packages->active = $request->input('active') ;
+            $packages->enterprise_id = auth()->user()->enterprise_id;
 
 
             $isSaved = $packages->save();
