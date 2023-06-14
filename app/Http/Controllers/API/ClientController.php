@@ -15,13 +15,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClientController extends Controller
 {
-
+    
     public function index()
     {
         //
     }
 
-
+   
     public function create()
     {
         //
@@ -31,7 +31,7 @@ class ClientController extends Controller
 {
     $validator = Validator::make($request->all(), [
         'name' => 'required',
-        'email' => 'required|email',
+        'email' => 'required|email  ',
         'phone_number' => 'required',
         'enterprise_id' => 'required',
         'package_id' => 'required',
@@ -86,7 +86,8 @@ class ClientController extends Controller
     $onlinePaymentId = null;
     $transaction_number = $request->input('transaction_number');
     $activationCode = $request->input('activation_code');
-
+    $paidAmount = $package->price; 
+    
     if (!empty($transaction_number)) {
         $onlinePayment = OnlinePayment::where('transaction_number', $transaction_number)->first();
 
@@ -95,6 +96,8 @@ class ClientController extends Controller
         }
 
         $onlinePaymentId = $onlinePayment->id;
+        $paidAmount = $onlinePayment->amount;
+
 
     } elseif (!empty($activationCode)) {
         $activation = ActivationCode::where('number', $activationCode)
@@ -112,6 +115,9 @@ class ClientController extends Controller
         if ($start_date >= $today || $end_date <= $today) {
             return response()->json(['message' => 'Activation code is not valid'], Response::HTTP_BAD_REQUEST);
         }
+
+        $paidAmount = $activation->price;
+
     }
 
     $subscriptionMethod = !empty($activationCode) ? 'activation_code' : 'online';
@@ -126,12 +132,13 @@ class ClientController extends Controller
         'start_date' => $startDate,
         'end_date' => $endDate,
         'limit' => $package->limit,
+        'paid_amount' => $paidAmount,
     ]);
 
     return response()->json(['subscription' => $subscription], 201);
 }
 
-
+   
 //     public function store(Request $request)
 // {
 //     $client = Client::where('email', $request->email)->first();
@@ -203,7 +210,7 @@ class ClientController extends Controller
 //         }
 //     }
 
-    // $subscriptionMethod = !empty($activationCode) ? 'activation_code' : 'online';
+//     $subscriptionMethod = !empty($activationCode) ? 'activation_code' : 'online';
 
 //     $subscription = Subscription::create([
 //         'client_id' => $client->id,
@@ -224,13 +231,13 @@ class ClientController extends Controller
         //
     }
 
-
+    
     public function edit(Client $client)
     {
         //
     }
 
-
+   
     public function update(Request $request, Client $client)
     {
         //

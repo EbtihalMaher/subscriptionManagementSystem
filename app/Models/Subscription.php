@@ -19,7 +19,8 @@ class Subscription extends Model
         'end_date',
         'limit',
         'onlinepayment_id',
-        'subscription_method'
+        'subscription_method',
+        'paid_amount',
     ];
 
     public function client()
