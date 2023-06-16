@@ -12,11 +12,7 @@ class ActivationCode extends Model
 {
     
     use HasFactory, HasRoles, Notifiable;
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+   
     protected $fillable = [
         'group_id',
         'number', 

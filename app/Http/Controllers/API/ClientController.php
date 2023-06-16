@@ -18,14 +18,18 @@ class ClientController extends Controller
     
     public function index()
     {
-        //
+        $clients = Client::all();
+        return response()->json(['clients' => $clients]);
     }
 
-   
-    public function create()
+    public function show($id)
     {
-        //
+        $client = Client::findOrFail($id);
+        $subscriptions = $client->subscriptions()->paginate();
+    
+        return response()->json(['client' => $client, 'subscriptions' => $subscriptions]);
     }
+
 
     public function store(Request $request)
 {
@@ -226,25 +230,4 @@ class ClientController extends Controller
 //     return response()->json(['subscription' => $subscription], 201);
 // }
 
-    public function show(Client $client)
-    {
-        //
-    }
-
-    
-    public function edit(Client $client)
-    {
-        //
-    }
-
-   
-    public function update(Request $request, Client $client)
-    {
-        //
-    }
-
-    public function destroy(Client $client)
-    {
-        //
-    }
 }

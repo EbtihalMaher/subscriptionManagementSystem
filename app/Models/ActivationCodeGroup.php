@@ -12,11 +12,7 @@ class ActivationCodeGroup extends Model
 {
     use SoftDeletes;
     use HasFactory, HasRoles, Notifiable;
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+   
     protected $fillable = [
         'package_id',
         'group_name',
