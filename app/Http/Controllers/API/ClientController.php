@@ -59,6 +59,12 @@ class ClientController extends Controller
     }
 
     $package = Package::findOrFail($request->package_id);
+    if ($package->isLimited()) {
+        $limit = $package->limit;
+    } else {
+        $limit = null;
+    }
+
     $duration = $package->duration;
     $durationUnit = $package->duration_unit;
 
@@ -135,7 +141,7 @@ class ClientController extends Controller
         'subscription_method' => $subscriptionMethod,
         'start_date' => $startDate,
         'end_date' => $endDate,
-        'limit' => $package->limit,
+        'limit' => $limit,
         'paid_amount' => $paidAmount,
     ]);
 

@@ -14,40 +14,16 @@ use Carbon\Carbon;
 
 class SubscriptionController extends Controller
 {
-  
-    public function index()
+    public function decreaseLimit(Request $request, $subscription_id)
     {
-        //
-    }
+        $subscription = Subscription::findOrFail($subscription_id);
 
+        if ($subscription->limit !== null) {
+            $discount = $request->input('discount');
+            $subscription->limit = $subscription->limit - $discount;
+            $subscription->save();
+        }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-
-    }
-   
-    public function show(Subscription $subscription)
-    {
-        //
-    }
-
-   
-    public function edit(Subscription $subscription)
-    {
-        //
-    }
-
-    public function update(Request $request, Subscription $subscription)
-    {
-        //
-    }
-    public function destroy(Subscription $subscription)
-    {
-        //
+        return response()->json(['subscription' => $subscription]);
     }
 }
