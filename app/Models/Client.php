@@ -36,5 +36,11 @@ class Client extends Model
     {
         return $this->belongsTo(PromoCode::class);
     }
+    
+    public function scopeByEnterpriseID($query)
+    {
+        $enterpriseId = session('enterprise_id');
+        return $query->where('enterprise_id', $enterpriseId);
+    }
 
 }

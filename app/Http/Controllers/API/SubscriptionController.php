@@ -16,7 +16,7 @@ class SubscriptionController extends Controller
 {
     public function decreaseLimit(Request $request, $subscription_id)
     {
-        $subscription = Subscription::findOrFail($subscription_id);
+        $subscription = Subscription::ByEnterpriseID()->findOrFail($subscription_id);
 
         if ($subscription->limit !== null) {
             $discount = $request->input('discount');

@@ -42,5 +42,11 @@ class Subscription extends Model
     {
         return $this->belongsTo(PromoCode::class, 'promo_code_id');
     }
+    
+    public function scopeByEnterpriseID($query)
+    {
+        $enterpriseId = session('enterprise_id');
+        return $query->where('enterprise_id', $enterpriseId);
+    }
 
 }

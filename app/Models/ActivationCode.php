@@ -27,4 +27,10 @@ class ActivationCode extends Model
     public function scopeByEnterprise ($query) {
         return $query->where('enterprise_id', auth()->user()->enterprise_id);
     }
+    
+    public function scopeByEnterpriseID($query)
+    {
+        $enterpriseId = session('enterprise_id');
+        return $query->where('enterprise_id', $enterpriseId);
+    }
 }

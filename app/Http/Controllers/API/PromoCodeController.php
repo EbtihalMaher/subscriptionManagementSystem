@@ -11,7 +11,7 @@ class PromoCodeController extends Controller
 {
     public function show($name)
     {
-        $promoCode = PromoCode::where('name', $name)->first();
+        $promoCode = PromoCode::ByEnterpriseID()->where('name', $name)->first();
         return response()->json(['promo_code' => $promoCode]);
     }
 }

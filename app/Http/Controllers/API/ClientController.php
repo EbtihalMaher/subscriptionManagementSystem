@@ -18,15 +18,15 @@ class ClientController extends Controller
     
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::ByEnterpriseID()->all();
         return response()->json(['clients' => $clients]);
     }
 
     public function show($id)
     {
-        $client = Client::findOrFail($id);
+        $client = Client::ByEnterpriseID()->findOrFail($id);
         $subscriptions = $client->subscriptions()->paginate();
-    
+        
         return response()->json(['client' => $client, 'subscriptions' => $subscriptions]);
     }
 
@@ -144,6 +144,9 @@ class ClientController extends Controller
         'limit' => $limit,
         'paid_amount' => $paidAmount,
     ]);
+    
+    $request->headers->set('api_key', $client->enterprise->api_key);
+
 
     return response()->json(['subscription' => $subscription], 201);
 }

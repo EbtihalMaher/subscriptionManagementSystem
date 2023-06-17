@@ -20,7 +20,13 @@ class OnlinePayment extends Model
     }
 
     public function promoCode()
-{
-    return $this->belongsTo(PromoCode::class);
-}
+    {
+        return $this->belongsTo(PromoCode::class);
+    }
+    
+    public function scopeByEnterpriseID($query)
+    {
+        $enterpriseId = session('enterprise_id');
+        return $query->where('enterprise_id', $enterpriseId);
+    }
 }

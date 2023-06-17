@@ -28,19 +28,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/clients',  [ClientController::class, 'index']);
-Route::get('/clients/{id}', [ClientController::class, 'show']);
-Route::post('/clients',  [ClientController::class, 'store']);
+Route::group(['middleware' => 'api_key'], function () {
+    Route::get('/clients',  [ClientController::class, 'index']);
+    Route::get('/clients/{id}', [ClientController::class, 'show']);
+    Route::post('/clients',  [ClientController::class, 'store']);
 
-Route::post('/online-payments', [OnlinePaymentController::class, 'store']);
+    Route::post('/online-payments', [OnlinePaymentController::class, 'store']);
 
-Route::get('/activation-codes/group/{groupId}', [ActivationCodeController::class, 'showGroupActivationCode']);
-Route::get('/activation-codes/group/{groupId}/{activationCodeId}', [ActivationCodeController::class, 'showActivationCode']);
+    Route::get('/activation-codes/group/{groupId}', [ActivationCodeController::class, 'showGroupActivationCode']);
+    Route::get('/activation-codes/group/{groupId}/{activationCodeId}', [ActivationCodeController::class, 'showActivationCode']);
 
-Route::get('/packages', [PackageController::class, 'index']);
-Route::get('/packages/{id}', [PackageController::class, 'show']);
+    Route::get('/packages', [PackageController::class, 'index']);
+    Route::get('/packages/{id}', [PackageController::class, 'show']);
 
-Route::get('/promo-codes/{name}', [PromoCodeController::class, 'show']);
+    Route::get('/promo-codes/{name}', [PromoCodeController::class, 'show']);
 
-Route::post('/subscriptions/{subscription_id}/decrease-limit', [SubscriptionController::class, 'decreaseLimit']);
+    Route::post('/subscriptions/{subscription_id}/decrease-limit', [SubscriptionController::class, 'decreaseLimit']);
+});
+
+
+
 
