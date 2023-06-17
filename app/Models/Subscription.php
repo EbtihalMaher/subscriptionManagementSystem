@@ -49,4 +49,9 @@ class Subscription extends Model
         return $query->where('enterprise_id', $enterpriseId);
     }
 
+    public function clientProfile()
+    {
+        return $this->hasMany(ClientProfile::class, 'current_subscription_id');
+    }
+
 }

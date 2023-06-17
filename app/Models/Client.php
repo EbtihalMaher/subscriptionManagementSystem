@@ -43,4 +43,9 @@ class Client extends Model
         return $query->where('enterprise_id', $enterpriseId);
     }
 
+    public function profile()
+    {
+        return $this->hasOne(ClientProfile::class);
+    }
+
 }

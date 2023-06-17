@@ -26,7 +26,7 @@ class ApiKeyMiddleware
             return response()->json(['message' => 'Invalid API key'], 401);
         }
 
-        $request->session()->put('enterprise_id', $enterprise->id);
+        session()->put('enterprise_id', $enterprise->id);
 
         return $next($request);
     
