@@ -51,7 +51,6 @@ class Subscription extends Model
 
     public function clientProfile()
     {
-        return $this->hasMany(ClientProfile::class, 'current_subscription_id');
+        return $this->belongsTo(ClientProfile::class, 'current_subscription_id');
     }
-
 }

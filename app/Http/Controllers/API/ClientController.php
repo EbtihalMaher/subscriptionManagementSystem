@@ -25,10 +25,9 @@ class ClientController extends Controller
 
     public function show($id)
     {
-        $client = Client::ByEnterpriseID()->findOrFail($id);
-        $subscriptions = $client->subscriptions()->paginate();
+        $client = Client::ByEnterpriseID()->with('subscriptions', 'profile')->findOrFail($id);
+        return response()->json(['client' => $client]);
         
-        return response()->json(['client' => $client, 'subscriptions' => $subscriptions]);
     }
 
     public function store(Request $request)
@@ -178,45 +177,86 @@ class ClientController extends Controller
         return response()->json(['subscription' => $subscription], 201);
     }
 
-
     public function refreshProfile(Client $client)
-    {
-        $clientProfile = $client->profile;
-        if (!$clientProfile) {
-            $clientProfile = ClientProfile::create([
-                'client_id' => $client->id,
-                'current_subscription_id' => null,
-                'start_date' => null,
-                'end_date' => null,
-                'package_id' => null,
-                'limit' => null,
-            ]);
-        }
-
-        if ($clientProfile) {
-            $latestSubscription = $client->subscriptions()->where('end_date', '>=', Carbon::now())->orderBy('start_date', 'desc')->first();
-
-            if ($latestSubscription) {
-                $clientProfile->current_subscription_id = $latestSubscription->id;
-                $clientProfile->start_date = $latestSubscription->start_date;
-                $clientProfile->end_date = $latestSubscription->end_date;
-                $clientProfile->package_id = $latestSubscription->package_id;
-                $clientProfile->limit = $latestSubscription->package->limit;
-            } else {
-                $clientProfile->current_subscription_id = null;
-                $clientProfile->start_date = null;
-                $clientProfile->end_date = null;
-                $clientProfile->package_id = null;
-                $clientProfile->limit = null;
-            }
-
-            $clientProfile->save();
-
-            return response()->json(['message' => 'Client profile updated successfully.']);
-        } else {
-            return response()->json(['message' => 'Client profile not found.'], 404);
-        }
+{
+    $clientProfile = $client->profile;
+    if (!$clientProfile) {
+        $clientProfile = ClientProfile::create([
+            'client_id' => $client->id,
+            'current_subscription_id' => null,
+            'start_date' => null,
+            'end_date' => null,
+            'package_id' => null,
+            'limit' => null,
+        ]);
     }
+
+    if ($clientProfile) {
+        $latestSubscription = $client->subscriptions()->where('end_date', '>=', Carbon::now())->orderBy('start_date', 'desc')->first();
+
+        if ($latestSubscription) {
+            $clientProfile->current_subscription_id = $latestSubscription->id;
+            $clientProfile->start_date = $latestSubscription->start_date;
+            $clientProfile->end_date = $latestSubscription->end_date;
+            $clientProfile->package_id = $latestSubscription->package_id;
+            $clientProfile->limit = $latestSubscription->package->limit;
+        } else {
+            $clientProfile->current_subscription_id = null;
+            $clientProfile->start_date = null;
+            $clientProfile->end_date = null;
+            $clientProfile->package_id = null;
+            $clientProfile->limit = null;
+        }
+
+        $clientProfile->save();
+
+        $client = $client->refresh(); // Refresh the client model to get updated profile
+
+        return response()->json(['message' => 'Client profile updated successfully.', 'client' => $client]);
+    } else {
+        return response()->json(['message' => 'Client profile not found.'], 404);
+    }
+}
+
+
+    // public function refreshProfile(Client $client)
+    // {
+    //     $clientProfile = $client->profile;
+    //     if (!$clientProfile) {
+    //         $clientProfile = ClientProfile::create([
+    //             'client_id' => $client->id,
+    //             'current_subscription_id' => null,
+    //             'start_date' => null,
+    //             'end_date' => null,
+    //             'package_id' => null,
+    //             'limit' => null,
+    //         ]);
+    //     }
+
+    //     if ($clientProfile) {
+    //         $latestSubscription = $client->subscriptions()->where('end_date', '>=', Carbon::now())->orderBy('start_date', 'desc')->first();
+
+    //         if ($latestSubscription) {
+    //             $clientProfile->current_subscription_id = $latestSubscription->id;
+    //             $clientProfile->start_date = $latestSubscription->start_date;
+    //             $clientProfile->end_date = $latestSubscription->end_date;
+    //             $clientProfile->package_id = $latestSubscription->package_id;
+    //             $clientProfile->limit = $latestSubscription->package->limit;
+    //         } else {
+    //             $clientProfile->current_subscription_id = null;
+    //             $clientProfile->start_date = null;
+    //             $clientProfile->end_date = null;
+    //             $clientProfile->package_id = null;
+    //             $clientProfile->limit = null;
+    //         }
+
+    //         $clientProfile->save();
+
+    //         return response()->json(['message' => 'Client profile updated successfully.']);
+    //     } else {
+    //         return response()->json(['message' => 'Client profile not found.'], 404);
+    //     }
+    // }
 
 
 //     public function store(Request $request)
