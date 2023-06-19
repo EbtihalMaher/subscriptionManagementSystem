@@ -52,11 +52,35 @@
         </table>
     </div>
     <!-- /.card-body -->
-    {{-- <div class="card-footer clearfix">
+    <div class="card-footer clearfix">
         <ul class="pagination pagination-sm m-0 float-right">
-            {{ $activationCodeGroups->links() }}
+            @if ($activationCodeGroups->currentPage() > 1)
+                <li class="page-item">
+                    <a class="page-link" href="{{ $activationCodeGroups->previousPageUrl() }}">&laquo;</a>
+                </li>
+            @endif
+    
+            @for ($i = 1; $i <= $activationCodeGroups->lastPage(); $i++)
+                @if ($i == $activationCodeGroups->currentPage())
+                    <li class="page-item active">
+                        <span class="page-link">{{ $i }}</span>
+                    </li>
+                @else
+                    @if ($i >= $activationCodeGroups->currentPage() - 2 && $i <= $activationCodeGroups->currentPage() + 2)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $activationCodeGroups->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endif
+                @endif
+            @endfor
+    
+            @if ($activationCodeGroups->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $activationCodeGroups->nextPageUrl() }}">&raquo;</a>
+                </li>
+            @endif
         </ul>
-    </div> --}}
+    </div>
 @endsection
 
 <script>

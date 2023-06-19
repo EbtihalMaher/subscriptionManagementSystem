@@ -21,12 +21,24 @@ class ActivationCodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // public function index(Request $request)
+    // {
+    //     $paginate=10;
+    //     $activationCodes = ActivationCode::with('activationCodeGroup')->where('group_id', $request->query('group_id'))->paginate($paginate);
+    //     return response()->view('cms.activation_codes.index',  ['activationCodes' => $activationCodes]);
+    //     // $activationCodes = ActivationCode::with('activationCodeGroup')->get();
+    //     // return response()->view('cms.activation_codes.index', ['activationCodes' => $activationCodes]);
+    // }
     public function index(Request $request)
     {
-        $activationCodes = ActivationCode::with('activationCodeGroup')->where('group_id', $request->query('group_id'))->get();
-        return response()->view('cms.activation_codes.index',  ['activationCodes' => $activationCodes]);
-        // $activationCodes = ActivationCode::with('activationCodeGroup')->get();
-        // return response()->view('cms.activation_codes.index', ['activationCodes' => $activationCodes]);
+        $groupId = $request->query('group_id');
+        $paginate = 10;
+        $activationCodes = ActivationCode::with('activationCodeGroup')->where('group_id', $groupId)->paginate($paginate);
+
+        return response()->view('cms.activation_codes.index', [
+            'activationCodes' => $activationCodes,
+            'groupId' => $groupId,
+        ]);
     }
 
     /**

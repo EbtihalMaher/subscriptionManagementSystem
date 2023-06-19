@@ -26,10 +26,11 @@ class EnterpriseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //SELECT * FROM enterprises;
-        $enterprises = Enterprise::with('role')->get();
+        $paginate=10;
+        $enterprises = Enterprise::with('role')->paginate($paginate);
         return response()->view('cms.enterprises.index', ['enterprises' => $enterprises]);
     }
 

@@ -23,9 +23,10 @@ class ActivationCodeGroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $activationCodeGroups = ActivationCodeGroup::with('package')->withTrashed()->get();
+        $paginate=10;
+        $activationCodeGroups = ActivationCodeGroup::with('package')->withTrashed()->paginate($paginate);
         return response()->view('cms.activation_codes_groups.index', ['activationCodeGroups' => $activationCodeGroups]);
     }
 

@@ -26,10 +26,11 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //SELECT * FROM admins;
-        $admins = Admin::with('role')->get();
+        $paginate=10;
+        $admins = Admin::with('role')->paginate($paginate);
         return response()->view('cms.admins.index', ['admins' => $admins]);
     }
 

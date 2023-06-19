@@ -38,13 +38,36 @@
     <!-- /.card-body -->
     <div class="card-footer clearfix">
         <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+            @if ($activationCodes->currentPage() > 1)
+                <li class="page-item">
+                    <a class="page-link" href="{{ $activationCodes->previousPageUrl() }}">&laquo;</a>
+                </li>
+            @endif
+    
+            @for ($i = 1; $i <= $activationCodes->lastPage(); $i++)
+                @if ($i == $activationCodes->currentPage())
+                    <li class="page-item active">
+                        <span class="page-link">{{ $i }}</span>
+                    </li>
+                @else
+                    @if ($i >= $activationCodes->currentPage() - 2 && $i <= $activationCodes->currentPage() + 2)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('activation_codes.index', ['group_id' => $groupId, 'page' => $i]) }}">{{ $i }}</a>
+                        </li>
+                    @endif
+                @endif
+            @endfor
+    
+            @if ($activationCodes->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $activationCodes->nextPageUrl() }}">&raquo;</a>
+                </li>
+            @endif
         </ul>
     </div>
+    
+    
+    
 @endsection
 
 <script>

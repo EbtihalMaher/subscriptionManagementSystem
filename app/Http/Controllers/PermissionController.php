@@ -19,10 +19,11 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $permissions = Permission::query()->filterByLevel()->get();
+        $paginate=10;
+        $permissions = Permission::query()->filterByLevel()->paginate($paginate);
         return response()->view('cms.permissions.index', ['permissions' => $permissions]);
     }
 

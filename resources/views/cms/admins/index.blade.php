@@ -43,11 +43,31 @@
     <!-- /.card-body -->
     <div class="card-footer clearfix">
         <ul class="pagination pagination-sm m-0 float-right">
-            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+            @if ($admins->currentPage() > 1)
+                <li class="page-item">
+                    <a class="page-link" href="{{ $admins->previousPageUrl() }}">&laquo;</a>
+                </li>
+            @endif
+    
+            @for ($i = 1; $i <= $admins->lastPage(); $i++)
+                @if ($i == $admins->currentPage())
+                    <li class="page-item active">
+                        <span class="page-link">{{ $i }}</span>
+                    </li>
+                @else
+                    @if ($i >= $admins->currentPage() - 2 && $i <= $admins->currentPage() + 2)
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $admins->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endif
+                @endif
+            @endfor
+    
+            @if ($admins->hasMorePages())
+                <li class="page-item">
+                    <a class="page-link" href="{{ $admins->nextPageUrl() }}">&raquo;</a>
+                </li>
+            @endif
         </ul>
     </div>
 

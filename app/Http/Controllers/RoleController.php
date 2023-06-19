@@ -26,9 +26,10 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::query()->filterByLevel()->withCount('permissions')->get();
+        $paginate=10;
+        $roles = Role::query()->filterByLevel()->withCount('permissions')->paginate($paginate);
         return response()->view('cms.roles.index',['roles'=>$roles]);
     }
 

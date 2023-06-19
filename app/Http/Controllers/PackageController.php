@@ -19,9 +19,10 @@ class PackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $packages = Package::with('enterprise')->withTrashed()->get();
+        $paginate=10;
+        $packages = Package::with('enterprise')->withTrashed()->paginate($paginate);
         return response()->view('cms.packages.index', ['packages' => $packages]);
     }
 

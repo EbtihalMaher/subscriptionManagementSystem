@@ -21,9 +21,10 @@ class PromoCodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $promo_codes = PromoCode::with('package')->get();
+        $paginate=10;
+        $promo_codes = PromoCode::with('package')->paginate($paginate);
         return response()->view('cms.promo_codes.index', ['promo_codes' => $promo_codes]);
     }
 

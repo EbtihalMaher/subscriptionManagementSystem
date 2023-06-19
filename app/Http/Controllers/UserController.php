@@ -25,10 +25,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $users = User::withCount(['permissions'])->with('role')->paginate(10);
+        $paginate=10;
+        $users = User::withCount(['permissions'])->with('role')->paginate($paginate);
         return response()->view('cms.users.index', ['users' => $users]);
     }
 
