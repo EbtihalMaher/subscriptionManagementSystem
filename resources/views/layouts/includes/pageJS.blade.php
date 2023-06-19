@@ -30,3 +30,7 @@
 
     <!-- datepicker -->
     <script src="{{ asset('assets/js/bootstrap-datepicker.min.js') }}"></script>
+    
+    <!-- icon -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    

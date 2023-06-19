@@ -21,7 +21,8 @@
                     <td>{{$permission->name}}</td>
                     <td>
                         <span
-                            class="badge bg-success">{{$permission->guard_name}}</span>
+                            class="badge bg-success">{{$permission->guard_name}}
+                        </span>
                     </td>
                 </tr>
                 @endforeach

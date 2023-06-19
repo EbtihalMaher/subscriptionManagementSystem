@@ -24,9 +24,8 @@
                         <td>{{$activationCode->number}}</td>
                         <td>
                             {{-- <div class="btn-group"> --}}
-                                <a href="#" onclick="confirmDelete('{{$activationCode->id}}')"
-                                    class="btn btn-danger">
-                                    <i class="fas fa-trash"></i>
+                                <a href="#" onclick="confirmDelete('{{$activationCode->id}}')" class="btn btn-danger">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
                                 </a>
                             {{-- </div> --}}
                         </td>

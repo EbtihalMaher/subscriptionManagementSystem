@@ -46,11 +46,11 @@
                             </td>
     
                             <td>
-                                {{-- <div class="btn-group"> --}}
+                                <div class="btn-group" >
                                     <a href="#" onclick="confirmDelete('{{$package->id}}')" class="btn btn-danger">
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                     </a>
-                                {{-- </div> --}}
+                                </div>
                             </td>
                         </tr>
                     @endforeach

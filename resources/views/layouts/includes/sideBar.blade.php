@@ -4,7 +4,8 @@
     <div class="app-brand demo">
     <a href="index.html" class="app-brand-link">
         <span class="app-brand-logo demo">
-        <svg
+            <img src="{{ asset('assets/img/logo.png') }} " class="w-px-150 h-auto "/>
+        {{-- <svg
             width="25"
             viewBox="0 0 25 42"
             version="1.1"
@@ -56,9 +57,9 @@
                 </g>
             </g>
             </g>
-        </svg>
+        </svg> --}}
         </span>
-        <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+        {{-- <span class="app-brand-text demo menu-text fw-bolder ms-2">SubPay</span> --}}
     </a>
 
     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -80,7 +81,7 @@
         @can('Read-Admins')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class='menu-icon tf-icons bx bxs-user-check'></i>
                 <div data-i18n="Layouts">Admins</div>
             </a>
 
@@ -103,7 +104,7 @@
         @can('Read-Enterprises')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class='menu-icon tf-icons bx bxs-buildings' ></i>
                 <div data-i18n="Layouts">Enterprises</div>
             </a>
 
@@ -125,7 +126,7 @@
         @can('Read-Users')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class='menu-icon tf-icons bx bx-package'></i>
                 <div data-i18n="Layouts">Package</div>
             </a>
 
@@ -148,7 +149,7 @@
         @can('Read-Users')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class='menu-icon tf-icons bx bx-barcode' ></i>
                 <div data-i18n="Layouts">Activation Code Group</div>
             </a>
 
@@ -172,7 +173,7 @@
         @can('Read-Users')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class='menu-icon tf-icons bx bx-barcode-reader' ></i>
                 <div data-i18n="Layouts">Promo Code </div>
             </a>
 
@@ -258,7 +259,7 @@
         @can('Read-Users')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class='menu-icon tf-icons bx bxs-user'></i>
                 <div data-i18n="Layouts">Users</div>
             </a>
 
@@ -281,7 +282,7 @@
         @can('Read-Roles')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <i class='menu-icon tf-icons bx bx-check-shield'></i>
                 <div data-i18n="Layouts">Roles & Permission</div>
             </a>
 

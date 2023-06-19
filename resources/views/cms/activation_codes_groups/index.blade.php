@@ -42,7 +42,7 @@
                             {{-- <div class="btn-group"> --}}
                                 <a href="#" onclick="confirmDelete('{{$activationCodeGroup->id}}')"
                                     class="btn btn-danger">
-                                    <i class="fas fa-trash">Delete</i>
+                                    <i class="fas fa-trash"></i>
                                 </a>
                             {{-- </div> --}}
                         </td>
