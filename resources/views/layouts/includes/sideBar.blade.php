@@ -331,13 +331,15 @@
 
 
         <li class="menu-item">
-            <a href="{{route("cms.logout")}}" class="menu-link">
-            Logout
+            <a href="{{route("cms.logout")}}" class="menu-link ">
+                <i class='menu-icon tf-icons bx bx-log-out'></i>
+                <div data-i18n="Layouts">Logout</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="{{route("cms.edit-password")}}" class="menu-link">
-            Change Password
+            <a href="{{route("cms.edit-password")}}" class="menu-link ">
+                <i class='menu-icon tf-icons bx bx-lock-open'></i>
+                <div data-i18n="Layouts">Change Password</div>
             </a>
         </li>
 
