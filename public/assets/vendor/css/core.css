@@ -15676,8 +15676,8 @@ html:not(.layout-footer-fixed) .content-wrapper {
 }
 
 .menu-vertical .app-brand {
-  padding-right: 2rem;
-  padding-left: 3rem;
+  padding-right: 2.5rem;
+  padding-left: 2.5rem;
   margin-bottom: 3px;
 }
 
