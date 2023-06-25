@@ -13,25 +13,30 @@ use App\Models\OnlinePayment;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\ClientProfile;
+use Illuminate\Support\Facades\DB;
+
 
 class ClientController extends Controller
 {
-    
+
     public function index()
     {
-        $clients = Client::ByEnterpriseID()->all();
+        $clients = Client::ByEnterpriseID()->get();
         return response()->json(['clients' => $clients]);
     }
 
     public function show($id)
     {
+
         $client = Client::ByEnterpriseID()->with('subscriptions', 'profile')->findOrFail($id);
         return response()->json(['client' => $client]);
-        
+
     }
 
     public function store(Request $request)
     {
+
+        //Validating the request data
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
@@ -46,6 +51,7 @@ class ClientController extends Controller
             return response()->json(['message' => $validator->errors()->first()], Response::HTTP_BAD_REQUEST);
         }
 
+        //Checking if the client already exists or creating a new on
         $client = Client::where('email', $request->email)->first();
 
         if (!$client) {
@@ -55,15 +61,12 @@ class ClientController extends Controller
                 'phone_number' => $request->phone_number,
                 'enterprise_id' => $request->enterprise_id,
             ]);
+        }else{
+            return response()->json(['message' => 'Email used previously'], Response::HTTP_BAD_REQUEST);
+
         }
 
-        $client = Client::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'enterprise_id' => $request->enterprise_id,
-        ]);
-
+        //Handling the latest subscription for the client
         $latestSubscription = $client->subscriptions()->where('end_date', '>=', Carbon::now())->orderBy('start_date', 'desc')->first();
 
         if ($latestSubscription) {
@@ -75,7 +78,7 @@ class ClientController extends Controller
             $clientProfile->limit = $latestSubscription->package->limit;
             $clientProfile->save();
         } else {
-            $clientProfile = ClientProfile::create([
+            $clientProfiles = ClientProfile::create([
                 'client_id' => $client->id,
                 'current_subscription_id' => null,
                 'start_date' => null,
@@ -85,8 +88,9 @@ class ClientController extends Controller
             ]);
         }
 
+        //Handling the package and duration
         $package = Package::findOrFail($request->package_id);
-        if ($package->isLimited()) {
+        if ($package->is_unlimited()) {
             $limit = $package->limit;
         } else {
             $limit = null;
@@ -95,6 +99,7 @@ class ClientController extends Controller
         $duration = $package->duration;
         $durationUnit = $package->duration_unit;
 
+        //Handling the start and end dates of the new subscription
         $lastSubscription = Subscription::where('client_id', $client->id)
             ->orderBy('end_date', 'desc')
             ->first();
@@ -120,6 +125,7 @@ class ClientController extends Controller
                 return response()->json(['message' => 'Unsupported duration unit'], Response::HTTP_BAD_REQUEST);
         }
 
+        //Handling payment details
         $onlinePaymentId = null;
         $transaction_number = $request->input('transaction_number');
         $activationCode = $request->input('activation_code');
@@ -159,7 +165,7 @@ class ClientController extends Controller
 
         $subscriptionMethod = !empty($activationCode) ? 'activation_code' : 'online';
 
-
+       //Creating the subscription
         $subscription = Subscription::create([
             'client_id' => $client->id,
             'package_id' => $request->package_id,
@@ -176,6 +182,10 @@ class ClientController extends Controller
 
         return response()->json(['subscription' => $subscription], 201);
     }
+
+
+
+
 
     public function refreshProfile(Client $client)
 {
@@ -217,6 +227,6 @@ class ClientController extends Controller
         return response()->json(['message' => 'Client profile not found.'], 404);
     }
 }
- 
+
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enterprise;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -62,13 +63,21 @@ class EnterpriseController extends Controller
 
 
         if (!$validator->fails()) {
-            $enterprise = new Enterprise();
-            $enterprise->name = $request->input('name');
-            $enterprise->email = $request->input('email');
-            $enterprise->contact = $request->input('contact');
-            $enterprise->api_key = Str::random(10);
-            $password = Str::random(10);
-            $isSaved = $enterprise->save();
+            $request['api_key'] = Str::random(10);
+            $enterprise = Enterprise::create($request->all());
+
+            $isSaved = false; // Initialize the boolean variable
+
+            if ($enterprise) {
+                $isSaved = true;
+                $user = User::query()->create([
+                    'name'          => $enterprise->name,
+                    'email'         => $enterprise->email,
+                    'password'      => bcrypt('123456'),
+                    'enterprise_id' => $enterprise->id,
+                ]);
+            }
+
             // if ($isSaved) {
             //     $enterprise->assignRole($request->input('role_id'));
             // }

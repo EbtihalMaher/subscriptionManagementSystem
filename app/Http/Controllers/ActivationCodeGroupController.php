@@ -50,7 +50,7 @@ class ActivationCodeGroupController extends Controller
      */
     public function store(Request $request)
     {
-        
+
 
         $validator = Validator($request->all(), [
             'package_id' => 'required|numeric|exists:packages,id',
@@ -88,7 +88,7 @@ class ActivationCodeGroupController extends Controller
             } else {
                 // Handle invalid date string
             }
-            
+
             $activationCodeGroup->price = $request->input('price');
             $activationCodeGroup->enterprise_id = auth()->user()->enterprise_id;
             $isSaved = $activationCodeGroup->save();
@@ -116,7 +116,7 @@ class ActivationCodeGroupController extends Controller
             );
         }
     }
- 
+
 
     /**
      * Display the specified resource.

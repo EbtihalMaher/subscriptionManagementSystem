@@ -17,18 +17,21 @@ class ApiKeyMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-
         $apiKey = $request->header('api_key');
 
-        $enterprise = Enterprise::where('api_key', $apiKey)->first();
 
-        if (!$enterprise) {
+        $enterprise = Enterprise::where('api_key', $apiKey)->first();
+        $x = $enterprise->api_key ;
+
+
+        if (!$enterprise->api_key) {
             return response()->json(['message' => 'Invalid API key'], 401);
         }
+
 
         session()->put('enterprise_id', $enterprise->id);
 
         return $next($request);
-    
+
     }
 }

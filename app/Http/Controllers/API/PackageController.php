@@ -10,13 +10,14 @@ class PackageController extends Controller
 {
     public function index()
     {
-        $packages = Package::ByEnterpriseID()->all();
+        $packages = Package::ByEnterpriseID()->get();
         return response()->json(['packages' => $packages]);
     }
 
     public function show($id)
     {
         $package = Package::ByEnterpriseID()->findOrFail($id);
+
         return response()->json(['package' => $package]);
     }
 }

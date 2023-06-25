@@ -15,11 +15,12 @@ use Carbon\Carbon;
 class SubscriptionController extends Controller
 {
 
-    public function decreaseLimit(Request $request, $client_id)
+    public function decreaseLimit(Request $request)
     {
-        $client = Client::ByEnterpriseID()->findOrFail($client_id);
+        $client = Client::ByEnterpriseID()->findOrFail($request->client_id);
 
         $clientProfile = $client->profile;
+
         $currentSubscription = $client->subscriptions()->where('id', $clientProfile->current_subscription_id)->first();
 
         if ($clientProfile && $currentSubscription && $currentSubscription->limit !== null) {
@@ -30,7 +31,7 @@ class SubscriptionController extends Controller
             if ($limit < 0) {
                 $limit = 0;
             }
-            
+
             $clientProfile->limit = $limit;
             $clientProfile->save();
             $currentSubscription->save();

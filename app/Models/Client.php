@@ -11,10 +11,10 @@ class Client extends Model
 
     protected $fillable = [
         'name',
-        'email', 
-        'phone_number', 
+        'email',
+        'phone_number',
         'enterprise_id',
-       
+
     ];
 
     public function onlinePayments()
@@ -36,14 +36,14 @@ class Client extends Model
     {
         return $this->belongsTo(PromoCode::class);
     }
-    
+
     public function scopeByEnterpriseID($query)
     {
         $enterpriseId = session('enterprise_id');
         return $query->where('enterprise_id', $enterpriseId);
     }
 
-    
+
     public function profile()
     {
         return $this->hasOne(ClientProfile::class, 'client_id');

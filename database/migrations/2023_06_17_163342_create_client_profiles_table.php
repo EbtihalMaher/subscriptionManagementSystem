@@ -15,15 +15,20 @@ return new class extends Migration
     {
         Schema::create('client_profiles', function (Blueprint $table) {
             $table->id();
+
             $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('clients');
+
             $table->unsignedBigInteger('current_subscription_id')->nullable();
+            $table->foreign('current_subscription_id')->references('id')
+                ->on('client_subscriptions');
+
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('limit')->nullable();
-            $table->timestamps();
 
-            $table->foreign('client_id')->references('id')->on('clients');
-            $table->foreign('current_subscription_id')->references('id')->on('subscriptions');
+
+            $table->timestamps();
         });
     }
 

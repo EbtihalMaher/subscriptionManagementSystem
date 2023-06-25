@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('client_subscriptions', function (Blueprint $table) {
-            
+
             $table->id();
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('client_subscriptions.');
+        Schema::dropIfExists('client_subscriptions');
     }
 };
