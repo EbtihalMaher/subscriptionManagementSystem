@@ -6,7 +6,10 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
-
+                <div class="card-body">
+                    <p>Welcome Admin</p>
+                </div>
+                
                 @can('Home')
                 <div class="card-body">
                     @if (session('status'))

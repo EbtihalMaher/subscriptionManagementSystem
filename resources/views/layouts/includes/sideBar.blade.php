@@ -71,7 +71,7 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item">
             <a href="{{ route('cms.dashboard') }}" class="menu-link">
             <i class="menu-icon tf-icons bx bx-home-circle"></i>
             <div data-i18n="Analytics">Dashboard</div>
@@ -85,14 +85,14 @@
                 <div data-i18n="Layouts">Admins</div>
             </a>
 
-            <ul class="menu-sub">
-                <li class="menu-item">
+            <ul class="menu-sub ">
+                <li class="menu-item ">
                     <a href="{{route('admins.index')}}" class="menu-link">
                     Index
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item ">
                     <a href="{{route("admins.create")}}" class="menu-link">
                     Create
                     </a>
@@ -109,13 +109,13 @@
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item ">
                     <a href="{{route('enterprises.index')}}" class="menu-link">
                     Index
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item ">
                     <a href="{{route("enterprises.create")}}" class="menu-link">
                     Create
                     </a>
@@ -281,7 +281,7 @@
 
         @can('Read-Roles')
         <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+            <a href="javascript:void(0);" class="menu-link menu-toggle" >
                 <i class='menu-icon tf-icons bx bx-check-shield'></i>
                 <div data-i18n="Layouts">Roles & Permission</div>
             </a>
@@ -294,19 +294,19 @@
                     {{-- @canany(['Create-Role', 'Read-Roles']) --}}
                     <ul class="menu-sub" >
                         {{-- @can('Read-Roles') --}}
-                        <li class="menu-item">
-                            <a href="{{route('roles.index')}}" class="menu-link">
+                        <li class="menu-item ">
+                            <a href="{{route('roles.index')}}" class="menu-link ">
                             Index
                             </a>
                         </li>
-                        {{-- @endcan
-                        @can('Create-Role') --}}
+                        
+                        
                         <li class="menu-item">
                             <a href="{{route("roles.create")}}" class="menu-link">
                             Create
                             </a>
                         </li>
-                        {{-- @endcan --}}
+                        
                     </ul>
                     {{-- @endcanany --}}
                 </li>
@@ -317,7 +317,7 @@
                         <div data-i18n="Layouts">Permissions</div>
                     </a>
                     <ul class="menu-sub" >
-                        <li class="menu-item">
+                        <li class="menu-item active">
                             <a href="{{route('permissions.index')}}" class="menu-link">
                             Index
                             </a>
