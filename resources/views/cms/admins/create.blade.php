@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="card-header">
-        <h3 class="card-title">Create Admins</h3>
+        <h3 class="card-title">Create Admin</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
