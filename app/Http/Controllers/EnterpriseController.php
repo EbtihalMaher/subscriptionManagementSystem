@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enterprise;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Str;
@@ -128,9 +130,31 @@ class EnterpriseController extends Controller
             $enterprise->email = $request->input('email');
             $enterprise->contact = $request->input('contact');
             $isSaved = $enterprise->save();
-            // if ($isSaved) {
-            //     $enterprise->syncRoles(Role::findById($request->input('role_id'), 'enterprise'));
-            // }
+
+             if ($isSaved) {
+                 $user = User::query()->create([
+                     'name'          => $enterprise->name . ' Admin',
+                     'email'         => $enterprise->email,
+                     'password'      => bcrypt('123456'),
+                     'enterprise_id' => $enterprise->id,
+                 ]);
+
+                 $role = Role::query()->create(
+                     [
+                         'name'          => 'Enterprise Admin',
+                         'guard_name'    => 'user',
+                         'user_level_id' => 2,
+                         'enterprise_id' => $enterprise->id,
+                     ]
+                 );
+
+                 $permissions = Permission::query()->where(['guard_name' => 'user'])->get();
+
+                 $role->syncPermissions($permissions);
+
+                 $user->assignRole([$role->id]);
+             }
+
             return response()->json(
                 ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
                 $isSaved ? Response::HTTP_OK : Response::HTTP_BAD_REQUEST
