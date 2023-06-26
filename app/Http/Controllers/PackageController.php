@@ -50,6 +50,7 @@ class PackageController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator($request->all(), [
             // 'package_id' => 'required|numeric|exists:packages,id',
             'name' => 'required|string',
@@ -59,7 +60,7 @@ class PackageController extends Controller
             'duration_unit' => 'required|string|in:d,m,y',
             'image' => 'required|image',
             'is_unlimited' => 'required|boolean',
-            'limit' => 'nullable|required_if:is_unlimited,false|integer',
+            'limit' => 'nullable|integer|min:0|max:100000|required_if:is_unlimited,false',
             'active' => 'required|boolean',
 
         ]);
