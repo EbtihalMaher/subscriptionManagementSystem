@@ -169,7 +169,7 @@
         </li>
         @endcan
 
-        
+
         @can('Read-Users')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -299,14 +299,14 @@
                             Index
                             </a>
                         </li>
-                        
-                        
+
+
                         <li class="menu-item">
                             <a href="{{route("roles.create")}}" class="menu-link">
                             Create
                             </a>
                         </li>
-                        
+
                     </ul>
                     {{-- @endcanany --}}
                 </li>

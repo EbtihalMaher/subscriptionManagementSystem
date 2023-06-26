@@ -180,15 +180,14 @@ class ClientController extends Controller
 
         $request->headers->set('api_key', $client->enterprise->api_key);
 
-        return response()->json(['subscription' => $subscription], 201);
+        return response()->json(['subscription' => $subscription , 'pi-key'=>$client->enterprise->api_key], 201);
     }
 
 
 
 
 
-    public function refreshProfile(Client $client)
-{
+    public function refreshProfile(Client $client){
     $clientProfile = $client->profile;
     if (!$clientProfile) {
         $clientProfile = ClientProfile::create([

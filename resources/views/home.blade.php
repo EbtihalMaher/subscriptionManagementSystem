@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <p>Welcome Admin</p>
                 </div>
-                
+
                 @can('Home')
                 <div class="card-body">
                     @if (session('status'))

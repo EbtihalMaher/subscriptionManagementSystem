@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enterprise;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+
+        if (Auth::user()->enterprise_id != null) {
+            $enterprise = Enterprise::where('id',Auth::user()->enterprise_id)->first();
+            return view('index',compact('enterprise'));
+        } else {
+            return view('index');
+
+        }
     }
 }

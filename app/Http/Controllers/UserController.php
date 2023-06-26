@@ -27,7 +27,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        //
         $paginate=10;
         $users = User::withCount(['permissions'])->with('role')->paginate($paginate);
         return response()->view('cms.users.index', ['users' => $users]);

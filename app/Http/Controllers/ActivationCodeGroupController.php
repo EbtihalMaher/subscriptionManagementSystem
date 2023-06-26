@@ -50,18 +50,17 @@ class ActivationCodeGroupController extends Controller
      */
     public function store(Request $request)
     {
-
-
         $validator = Validator($request->all(), [
             'package_id' => 'required|numeric|exists:packages,id',
             'group_name' => 'required|string',
             'count' => 'required|numeric',
-            'start_date' => 'date_format:d-M-Y',
-            'start_date' => 'date_format:d-M-Y',
+            'start_date' => 'required|date_format:m/d/Y',
+            'expire_date' => 'required|date_format:m/d/Y',
             'price' => 'required|numeric',
 
-
         ]);
+
+
 
         if (!$validator->fails()) {
             $activationCodeGroup = new ActivationCodeGroup();
@@ -70,23 +69,20 @@ class ActivationCodeGroupController extends Controller
             $activationCodeGroup->count = $request->input('count');
 
             $start_date_str = $request->input('start_date');
-            $start_date = DateTime::createFromFormat('d-M-Y', $start_date_str);
+            $start_date = DateTime::createFromFormat('m/d/Y', $start_date_str);
+
 
             if ($start_date !== false) {
                 $start_date_mysql = $start_date->format('Y-m-d H:i:s');
                 $activationCodeGroup->start_date = $start_date_mysql;
-            } else {
-                // Handle invalid date string
             }
 
-            $expire_date_str = $request->input('expire_date');
-            $expire_date = DateTime::createFromFormat('d-M-Y', $expire_date_str);
+            $expire_date_str = $request->input('start_date');
+            $expire_date = DateTime::createFromFormat('m/d/Y', $expire_date_str);
 
             if ($expire_date !== false) {
                 $expire_date_mysql = $expire_date->format('Y-m-d H:i:s');
                 $activationCodeGroup->expire_date = $expire_date_mysql;
-            } else {
-                // Handle invalid date string
             }
 
             $activationCodeGroup->price = $request->input('price');

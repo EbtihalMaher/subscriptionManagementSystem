@@ -64,24 +64,37 @@ class EnterpriseController extends Controller
 
 
         if (!$validator->fails()) {
-            $request['api_key'] = Str::random(10);
-            $enterprise = Enterprise::create($request->all());
+            $enterprise = new Enterprise();
+            $enterprise->name = $request->input('name');
+            $enterprise->email = $request->input('email');
+            $enterprise->contact = $request->input('contact');
+            $enterprise->api_key = Str::random(10);
+            $isSaved = $enterprise->save();
 
-            $isSaved = false; // Initialize the boolean variable
-
-            if ($enterprise) {
-                $isSaved = true;
+            if ($isSaved) {
                 $user = User::query()->create([
-                    'name'          => $enterprise->name,
+                    'name'          => $enterprise->name . ' Admin',
                     'email'         => $enterprise->email,
                     'password'      => bcrypt('123456'),
                     'enterprise_id' => $enterprise->id,
                 ]);
+
+                $role = Role::query()->create(
+                    [
+                        'name'          => $enterprise->name . 'Admin',
+                        'guard_name'    => 'user',
+                        'user_level_id' => 2,
+                        'enterprise_id' => $enterprise->id,
+                    ]
+                );
+
+                $permissions = Permission::query()->where(['guard_name' => 'user'])->get();
+
+                $role->syncPermissions($permissions);
+
+                $user->assignRole([$role->id]);
             }
 
-            // if ($isSaved) {
-            //     $enterprise->assignRole($request->input('role_id'));
-            // }
             return response()->json([
                 'message' => $isSaved ? 'Saved successfully' : 'Save failed!'
             ], $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST);
@@ -139,29 +152,7 @@ class EnterpriseController extends Controller
             $enterprise->contact = $request->input('contact');
             $isSaved = $enterprise->save();
 
-             if ($isSaved) {
-                 $user = User::query()->create([
-                     'name'          => $enterprise->name . ' Admin',
-                     'email'         => $enterprise->email,
-                     'password'      => bcrypt('123456'),
-                     'enterprise_id' => $enterprise->id,
-                 ]);
 
-                 $role = Role::query()->create(
-                     [
-                         'name'          => 'Enterprise Admin',
-                         'guard_name'    => 'user',
-                         'user_level_id' => 2,
-                         'enterprise_id' => $enterprise->id,
-                     ]
-                 );
-
-                 $permissions = Permission::query()->where(['guard_name' => 'user'])->get();
-
-                 $role->syncPermissions($permissions);
-
-                 $user->assignRole([$role->id]);
-             }
 
             return response()->json(
                 ['message' => $isSaved ? 'Saved successfully' : 'Save failed!'],
