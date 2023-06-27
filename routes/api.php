@@ -43,7 +43,7 @@ Route::group(['middleware' => 'api_key'], function () {
 
     Route::get('/promo-codes/{name}', [PromoCodeController::class, 'show']);
 
-    Route::post('/subscriptions/{subscription_id}/decrease-limit', [SubscriptionController::class, 'decreaseLimit']);
+    Route::post('/subscriptions/decrease-limit', [SubscriptionController::class, 'decreaseLimit']);
 
     Route::post('/clients/subscriptions', [SubscriptionController::class, 'store']);
     Route::get('/clients/{clientId}/profile/refresh', [ClientController::class, 'refreshProfile']);
