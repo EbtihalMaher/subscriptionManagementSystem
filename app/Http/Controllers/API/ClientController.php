@@ -22,6 +22,14 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::ByEnterpriseID()->with('subscriptions', 'profile')->get();
+        $packageIds = $clients->pluck('profile.package_id')->toArray();
+        $packages = Package::whereIn('id', $packageIds)->pluck('name', 'id')->toArray();
+
+        foreach ($clients as $client) {
+            $profilePackageId = $client->profile->package_id;
+            $client->profile->package_name = $packages[$profilePackageId] ?? null;
+        }
+
         return response()->json(['clients' => $clients]);
     }
 
