@@ -45,10 +45,9 @@ Route::group(['middleware' => 'api_key'], function () {
 
     Route::post('/subscriptions/{subscription_id}/decrease-limit', [SubscriptionController::class, 'decreaseLimit']);
 
+    Route::post('/clients/subscriptions', [SubscriptionController::class, 'store']);
+    Route::get('/clients/{clientId}/profile/refresh', [ClientController::class, 'refreshProfile']);
 
-    
 });
-    Route::post('/clients/{client}/subscriptions', [ClientController::class, 'storeSubscription']);
-    Route::get('/clients/{client}/profile/refresh', [ClientController::class, 'refreshProfile']);
 
 

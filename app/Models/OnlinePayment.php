@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class OnlinePayment extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'online_payments';
 
-    protected $fillable = ['client_id', 'amount', 'transaction_number', 'payment_method','promo_code_id'];
+    protected $fillable = ['client_id', 'amount', 'transaction_number', 'payment_method','promo_code_id', 'enterprise_id'];
 
 
     public function client()
@@ -23,7 +23,7 @@ class OnlinePayment extends Model
     {
         return $this->belongsTo(PromoCode::class);
     }
-    
+
     public function scopeByEnterpriseID($query)
     {
         $enterpriseId = session('enterprise_id');

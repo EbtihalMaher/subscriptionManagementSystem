@@ -15,73 +15,74 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OnlinePaymentController extends Controller
 {
-   
+
     public function index()
     {
         //
     }
 
-   
+
     public function create()
     {
         //
     }
 
 
-        public function store(Request $request)
-        {
-            $validator = Validator::make($request->all(), [
-                'client_id' => 'required',
-                'package_id' => 'required',
-                'payment_method' => 'required',
-                'promo_code' => 'string|nullable',
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'client_id' => 'required',
+            'package_id' => 'required',
+            'payment_method' => 'required',
+            'promo_code' => 'string|nullable',
 
-            ]);
+        ]);
 
-            if ($validator->fails()) {
-                return response()->json(['message' => $validator->errors()->first()], Response::HTTP_BAD_REQUEST);
-            }
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], Response::HTTP_BAD_REQUEST);
+        }
 
-            $client_id = $request->input('client_id');
-            $package_id = $request->input('package_id');
-            $payment_method = $request->input('payment_method');
+        $client_id = $request->input('client_id');
+        $package_id = $request->input('package_id');
+        $payment_method = $request->input('payment_method');
 
-            $package = Package::findOrFail($package_id);
-            $amount = $package->price;
+        $package = Package::findOrFail($package_id);
+        $amount = $package->price;
 
-            
-            if ($request->has('promo_code')) {
-                $promo_code = $request->input('promo_code');
-                $promoCode = PromoCode::where('name', $promo_code)->first();
 
-                if ($promoCode) {
-                    $today = Carbon::now()->toDateString();
-                    $start_date = $promoCode->start_date;
-                    $end_date = $promoCode->end_date;
+        if ($request->has('promo_code')) {
+            $promo_code = $request->input('promo_code');
+            $promoCode = PromoCode::where('name', $promo_code)->first();
 
-                    if ($start_date <= $today && $end_date >= $today) {
-                        $discount_percent = $promoCode->discount_percent;
+            if ($promoCode) {
+                $today = Carbon::now()->toDateString();
+                $start_date = $promoCode->start_date;
+                $end_date = $promoCode->end_date;
 
-                        $discount_amount = $amount * ($discount_percent / 100);
-                        $amount -= $discount_amount;
-                        $promo_code_id = $promoCode->id;
+                if ($start_date <= $today && $end_date >= $today) {
+                    $discount_percent = $promoCode->discount_percent;
 
-                    }
+                    $discount_amount = $amount * ($discount_percent / 100);
+                    $amount -= $discount_amount;
+                    $promo_code_id = $promoCode->id;
+
                 }
             }
-
-            $transaction_number = Str::random(12);
-
-            $onlinePayment = OnlinePayment::create([
-                'client_id' => $client_id,
-                'amount' => $amount,
-                'transaction_number' => $transaction_number,
-                'payment_method' => $payment_method,
-                'promo_code_id' => isset($promoCode) ? $promoCode->id : null,
-            ]);
-
-            return response()->json(['online_payment' => $onlinePayment], Response::HTTP_CREATED);
         }
+
+        $transaction_number = Str::random(12);
+
+        $onlinePayment = OnlinePayment::create([
+            'client_id' => $client_id,
+            'amount' => $amount,
+            'transaction_number' => $transaction_number,
+            'payment_method' => $payment_method,
+            'promo_code_id' => isset($promoCode) ? $promoCode->id : null,
+            'enterprise_id' => session('enterprise_id'),
+        ]);
+
+        return response()->json(['online_payment' => $onlinePayment], Response::HTTP_CREATED);
+    }
 
     public function show($id)
     {
