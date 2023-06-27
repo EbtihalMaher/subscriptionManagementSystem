@@ -29,17 +29,19 @@ class SubscriptionController extends Controller
         $currentSubscription = $client->subscriptions()->where('id', $clientProfile->current_subscription_id)->first();
 
         if ($clientProfile && $currentSubscription && $currentSubscription->limit !== null) {
-            $discount = $request->input('discount');
-            $limit = $clientProfile->limit - $discount;
-            $currentSubscription->limit = $currentSubscription->limit - $discount;
 
-            if ($limit < 0) {
-                $limit = 0;
+            $discount = $request->input('discount');
+            $clientProfile->limit = $clientProfile->limit - $discount;
+
+            if ($clientProfile->limit  < 0) {
+                $clientProfile->limit  = 0;
             }
 
-            $clientProfile->limit = $limit;
             $clientProfile->save();
+
+            $currentSubscription->limit = $currentSubscription->limit - $discount;
             $currentSubscription->save();
+
 
             return response()->json(['message' => 'Limit decreased successfully.', 'client' => $client]);
         } else {

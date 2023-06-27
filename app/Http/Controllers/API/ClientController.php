@@ -27,11 +27,14 @@ class ClientController extends Controller
 
         foreach ($clients as $client) {
             $profilePackageId = $client->profile->package_id;
-            $client->profile->package_name = $packages[$profilePackageId] ?? null;
+            $package = Package::find($profilePackageId);
+            $client->profile->package_name = $package->name ?? null;
+            $client->profile->package_limit = $package->limit ?? null;
         }
 
         return response()->json(['clients' => $clients]);
     }
+
 
     public function show($id)
     {
@@ -102,7 +105,7 @@ class ClientController extends Controller
                 $clientProfile->start_date = $latestSubscription->start_date;
                 $clientProfile->end_date = $latestSubscription->end_date;
                 $clientProfile->package_id = $latestSubscription->package_id;
-                $clientProfile->limit = $latestSubscription->package->limit;
+                $clientProfile->limit = $latestSubscription->limit;
             } else {
                 $clientProfile->current_subscription_id = null;
                 $clientProfile->start_date = null;
