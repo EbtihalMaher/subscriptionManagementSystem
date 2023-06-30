@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActivationCode;
+use App\Models\Enterprise;
 use App\Models\OnlinePayment;
 use App\Models\Subscription;
 use App\Models\Client;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Validator;
 class SubscriptionController extends Controller
 {
 
+
     public function decreaseLimit(Request $request)
     {
         $client = Client::ByEnterpriseID()->findOrFail($request->client_id);
@@ -27,17 +29,19 @@ class SubscriptionController extends Controller
         $currentSubscription = $client->subscriptions()->where('id', $clientProfile->current_subscription_id)->first();
 
         if ($clientProfile && $currentSubscription && $currentSubscription->limit !== null) {
-            $discount = $request->input('discount');
-            $limit = $clientProfile->limit - $discount;
-            $currentSubscription->limit = $currentSubscription->limit - $discount;
 
-            if ($limit < 0) {
-                $limit = 0;
+            $discount = $request->input('discount');
+            $clientProfile->limit = $clientProfile->limit - $discount;
+
+            if ($clientProfile->limit  < 0) {
+                $clientProfile->limit  = 0;
             }
 
-            $clientProfile->limit = $limit;
             $clientProfile->save();
+
+            $currentSubscription->limit = $currentSubscription->limit - $discount;
             $currentSubscription->save();
+
 
             return response()->json(['message' => 'Limit decreased successfully.', 'client' => $client]);
         } else {
@@ -121,7 +125,6 @@ class SubscriptionController extends Controller
 
         if (!empty($transaction_number)) {
             $onlinePayment = OnlinePayment::where('transaction_number', $transaction_number)->first();
-
             if (!$onlinePayment) {
                 return response()->json(['message' => 'Invalid transaction number'], Response::HTTP_BAD_REQUEST);
             }
@@ -158,7 +161,7 @@ class SubscriptionController extends Controller
             'client_id' => $client->id,
             'package_id' => $request->package_id,
             'enterprise_id' => $client->enterprise_id,
-            'online_payment_id' => $onlinePaymentId,
+            'onlinepayment_id' => $onlinePaymentId,
             'subscription_method' => $subscriptionMethod,
             'start_date' => $startDate,
             'end_date' => $endDate,

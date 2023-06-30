@@ -22,8 +22,19 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::ByEnterpriseID()->with('subscriptions', 'profile')->get();
+        $packageIds = $clients->pluck('profile.package_id')->toArray();
+        $packages = Package::whereIn('id', $packageIds)->pluck('name', 'id')->toArray();
+
+        foreach ($clients as $client) {
+            $profilePackageId = $client->profile->package_id;
+            $package = Package::find($profilePackageId);
+            $client->profile->package_name = $package->name ?? null;
+            $client->profile->package_limit = $package->limit ?? null;
+        }
+
         return response()->json(['clients' => $clients]);
     }
+
 
     public function show($id)
     {
@@ -94,7 +105,7 @@ class ClientController extends Controller
                 $clientProfile->start_date = $latestSubscription->start_date;
                 $clientProfile->end_date = $latestSubscription->end_date;
                 $clientProfile->package_id = $latestSubscription->package_id;
-                $clientProfile->limit = $latestSubscription->package->limit;
+                $clientProfile->limit = $latestSubscription->limit;
             } else {
                 $clientProfile->current_subscription_id = null;
                 $clientProfile->start_date = null;

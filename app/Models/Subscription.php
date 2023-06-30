@@ -13,9 +13,9 @@ class Subscription extends Model
 
     protected $fillable = [
         'client_id',
-        'package_id', 
+        'package_id',
         'enterprise_id',
-        'start_date', 
+        'start_date',
         'end_date',
         'limit',
         'onlinepayment_id',
@@ -37,12 +37,12 @@ class Subscription extends Model
     {
         return $this->belongsTo(Package::class);
     }
-    
+
     public function promoCode()
     {
         return $this->belongsTo(PromoCode::class, 'promo_code_id');
     }
-    
+
     public function scopeByEnterpriseID($query)
     {
         $enterpriseId = session('enterprise_id');
