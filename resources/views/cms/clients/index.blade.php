@@ -22,8 +22,8 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
-                    <td><a href="{{ route('clients.profile', $client->id) }}">Profile</a></td>
-                    <td><a href="{{ route('clients.subscriptions', $client->id) }}">Subscriptions</a></td>
+                    {{-- <td><a href="{{route('clients.index',$client->id)}}">Profile</a></td> --}}
+                    {{-- <td><a href="{{route('clients.subscriptions',$client->id)}}">Subscriptions</a></td> --}}
                 </tr>
                 @endforeach
             </tbody>

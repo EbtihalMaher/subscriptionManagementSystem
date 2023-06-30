@@ -14,7 +14,7 @@ class ClientController extends Controller
     public function index () {
         $clients = Client::byEnterpriseID()->with('subscriptions', 'profile')->get();
 
-        // return view
+        return response()->view('cms.clients.index', ['clients' => $clients]);
     }
 
     public function showProfile ($clientId)
