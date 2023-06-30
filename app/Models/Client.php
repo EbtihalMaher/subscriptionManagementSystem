@@ -39,7 +39,7 @@ class Client extends Model
 
     public function scopeByEnterpriseID($query)
     {
-        $enterpriseId = session('enterprise_id');
+        $enterpriseId = session('enterprise_id') ?? auth()->user()->enterprise_id;
         return $query->where('enterprise_id', $enterpriseId);
     }
 

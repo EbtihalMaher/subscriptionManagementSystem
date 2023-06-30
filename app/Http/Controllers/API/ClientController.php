@@ -21,7 +21,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $clients = Client::ByEnterpriseID()->with('subscriptions', 'profile')->get();
+        $clients = Client::byEnterpriseID()->with('subscriptions', 'profile')->get();
         $packageIds = $clients->pluck('profile.package_id')->toArray();
         $packages = Package::whereIn('id', $packageIds)->pluck('name', 'id')->toArray();
 
@@ -32,9 +32,7 @@ class ClientController extends Controller
             $client->profile->package_limit = $package->limit ?? null;
         }
 
-        // return response()->json(['clients' => $clients]);
-        return view('cms.clients.index', ['clients' => $clients, 'packages' => $packages])
-        ->with('jsonData', json_encode(['clients' => $clients]));
+         return response()->json(['clients' => $clients]);
     }
 
 
