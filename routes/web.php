@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PackageController;
-use App\Http\Controllers\API\ClientController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -78,6 +78,6 @@ Route::prefix('/cms/user')->middleware(['auth:user'/*, 'verified'*/])->group(fun
     Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
     Route::get('/client/{clientId}/profile', [ClientController::class, 'showProfile'])->name('client.profile');
     Route::get('/client/{clientId}/subscriptions', [ClientController::class, 'showSubscriptions'])->name('client.subscriptions');
-    
+
 });
-    
+

@@ -16,4 +16,14 @@ class ClientController extends Controller
 
         // return view
     }
+
+    public function showProfile ($clientId)
+    {
+
+    }
+
+    public function showSubscriptions ($clientId)
+    {
+
+    }
 }
