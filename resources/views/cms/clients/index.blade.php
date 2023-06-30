@@ -12,7 +12,6 @@
                     <th style="width: 5%">#</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Client ID</th>
                     <th>Profile</th>
                     <th>Subscriptions</th>
                 </tr>
@@ -23,7 +22,6 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $client->name }}</td>
                     <td>{{ $client->email }}</td>
-                    <td>{{ $client->id }}</td>
                     <td><a href="{{ route('clients.profile', $client->id) }}">Profile</a></td>
                     <td><a href="{{ route('clients.subscriptions', $client->id) }}">Subscriptions</a></td>
                 </tr>

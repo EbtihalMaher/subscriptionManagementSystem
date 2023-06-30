@@ -35,7 +35,6 @@ class ClientController extends Controller
         // return response()->json(['clients' => $clients]);
         return view('cms.clients.index', ['clients' => $clients, 'packages' => $packages])
         ->with('jsonData', json_encode(['clients' => $clients]));
-        
     }
 
 

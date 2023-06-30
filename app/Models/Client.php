@@ -46,7 +46,7 @@ class Client extends Model
 
     public function profile()
     {
-        return $this->hasOne(ClientProfile::class, 'client_id');
+        return $this->hasOne(ClientProfile::class, 'client_id' , 'id');
     }
 
 }
