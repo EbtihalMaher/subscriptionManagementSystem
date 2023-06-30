@@ -32,7 +32,10 @@ class ClientController extends Controller
             $client->profile->package_limit = $package->limit ?? null;
         }
 
-        return response()->json(['clients' => $clients]);
+        // return response()->json(['clients' => $clients]);
+        return view('cms.clients.index', ['clients' => $clients, 'packages' => $packages])
+        ->with('jsonData', json_encode(['clients' => $clients]));
+        
     }
 
 

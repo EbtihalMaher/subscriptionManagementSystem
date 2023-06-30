@@ -75,9 +75,9 @@ Route::prefix('/cms/user')->middleware(['auth:user'/*, 'verified'*/])->group(fun
     Route::resource('activation_codes', ActivationCodeController::class);
     Route::resource('promo_codes', PromoCodeController::class);
 
+    Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::get('/client/{clientId}/profile', [ClientController::class, 'showProfile'])->name('client.profile');
+    Route::get('/client/{clientId}/subscriptions', [ClientController::class, 'showSubscriptions'])->name('client.subscriptions');
+    
 });
     
-Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
-Route::get('/client/{clientId}/profile', [ClientController::class, 'showProfile'])->name('client.profile');
-Route::get('/client/{clientId}/subscriptions', [ClientController::class, 'showSubscriptions'])->name('client.subscriptions');
-
