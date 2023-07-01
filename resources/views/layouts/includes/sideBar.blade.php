@@ -282,6 +282,7 @@
         @can('Read-Users')
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
+              
                 <i class='menu-icon tf-icons bx bxs-user'></i>
                 <div data-i18n="Layouts">Clients</div>
             </a>

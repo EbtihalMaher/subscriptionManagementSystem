@@ -116,7 +116,7 @@ class ClientController extends Controller
 
             $clientProfile->save();
 
-            $client = $client->refresh(); // Refresh the client model to get updated profile
+            $client = $client->refresh(); 
 
             return response()->json(['message' => 'Client profile updated successfully.', 'client' => $client]);
         } else {

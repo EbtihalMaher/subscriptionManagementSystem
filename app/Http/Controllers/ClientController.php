@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Str;
+use App\Models\Subscription;
+use App\Models\ClientProfile;
+
+
 
 
 class ClientController extends Controller
@@ -19,11 +20,18 @@ class ClientController extends Controller
 
     public function showProfile ($clientId)
     {
-
+      $client = Client::findOrFail($clientId);
+      $profile = ClientProfile::where('client_id', $clientId)->first();
+  
+      return view('cms.clients.profile', ['client' => $client, 'profile' => $profile]);
     }
 
     public function showSubscriptions ($clientId)
     {
+    $client = Client::findOrFail($clientId);
 
+    $subscriptions = Subscription::where('client_id', $clientId)->get();
+
+    return view('cms.clients.subscriptions', [ 'client' => $client,'subscriptions' => $subscriptions ]);
     }
 }
