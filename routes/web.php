@@ -4,15 +4,13 @@ use App\Http\Controllers\ActivationCodeController;
 use App\Http\Controllers\ActivationCodeGroupController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PackageController;
-use App\Http\Controllers\PromoCodeController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,4 +74,10 @@ Route::prefix('/cms/user')->middleware(['auth:user'/*, 'verified'*/])->group(fun
     Route::resource('activation_codes_groups', ActivationCodeGroupController::class);
     Route::resource('activation_codes', ActivationCodeController::class);
     Route::resource('promo_codes', PromoCodeController::class);
+
+    Route::get('/clients', [ClientController::class, 'index'])->name('clients.index');
+    Route::get('/client/{clientId}/profile', [ClientController::class, 'showProfile'])->name('clients.profile');
+    Route::get('/client/{clientId}/subscriptions', [ClientController::class, 'showSubscriptions'])->name('clients.subscriptions');
+
 });
+

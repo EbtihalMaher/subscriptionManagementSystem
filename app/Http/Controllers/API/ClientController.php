@@ -21,7 +21,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $clients = Client::ByEnterpriseID()->with('subscriptions', 'profile')->get();
+        $clients = Client::byEnterpriseID()->with('subscriptions', 'profile')->get();
         $packageIds = $clients->pluck('profile.package_id')->toArray();
         $packages = Package::whereIn('id', $packageIds)->pluck('name', 'id')->toArray();
 
@@ -32,7 +32,7 @@ class ClientController extends Controller
             $client->profile->package_limit = $package->limit ?? null;
         }
 
-        return response()->json(['clients' => $clients]);
+         return response()->json(['clients' => $clients]);
     }
 
 
@@ -116,7 +116,7 @@ class ClientController extends Controller
 
             $clientProfile->save();
 
-            $client = $client->refresh(); // Refresh the client model to get updated profile
+            $client = $client->refresh(); 
 
             return response()->json(['message' => 'Client profile updated successfully.', 'client' => $client]);
         } else {

@@ -17,12 +17,12 @@
                             {{ __('Welcome Admin') }}
 
                         </h2>
-                            @if(\Illuminate\Support\Facades\Auth::user()->enterprise_id != null)
+                            {{-- @if(\Illuminate\Support\Facades\Auth::user()->enterprise_id != null)
                                 <small>Name: {{$enterprise->name}}</small>
                                 <small style="margin-left: 150px;">Email: {{$enterprise->email}}</small>
                                 <small style="margin-left: 150px;">API Key: {{$enterprise->api_key}}</small>
                                 <small style="margin-left: 150px;">Contact: {{$enterprise->contact}}</small>
-                            @endif
+                            @endif --}}
                     </div>
                 @endcan
 
